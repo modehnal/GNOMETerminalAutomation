@@ -295,8 +295,6 @@ This is the `behave.ini` file you will see in the `gnome-terminal` automation ex
   #  comma separated list - specify subset of "scenario,embed,table,text"
   #  "none" - show everything, even embeds
   behave.formatter.html-pretty.collapse = auto
-  # Defines if the user is interested in what steps are not executed.
-  behave.formatter.html-pretty.show_unexecuted_steps = true
 ```
 
 That run will now be executed as `'$ behave -kt dummy -f html-pretty -o test.html'`. This will change the formatter from the default `pretty` to the `html-pretty` that will take the data from behave, transform them and generate self contained html page to the output file `test.html`. Our test result files are named after the test case that was executed but omitted here for simplicity.
