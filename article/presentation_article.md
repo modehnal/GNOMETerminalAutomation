@@ -32,6 +32,7 @@
     - Start of the automation suite
     - Errors you can encounter
     - The main queries you will be using
+    - Explaining the rest of the `gnome-terminal` project.
 
   - Examples
 
@@ -1101,8 +1102,45 @@ I have started to develop qecore only a few years back so this project is relati
 
   Once you open the `Sniff` you can see the applications opened and you can click and browse its content. For better visual presentation click on `Actions` -> `Highlight Items`. With Xorg this shows you the `'red squares'` correctly around the selected nodes, with Wayland this will be shown incorrectly. That is one of the reason why going through the tree via interactive python is better. Once you get used to it, searching for your desired node is a matter of seconds.
 
+## Explaining the rest of the gnome-terminal project.
+
+- ### The mapper.yaml
+
+  This file serves as a automation suite definition.
+  - It contains definition of the `gnome-terminal` component and what arches it will run on and if it can run with Wayland.
+  - It lists dependencies with beaker task, so we can start appropriate machine setup.
+  - Defines what HW we are running.
+  - Setup and cleanup commands, which are empty in this project.
+  - And finally definition of all tests and how it will be fed to the `runtest.sh`.
+  - Also marking a few tests as `gate` tests, which is a subset of tests that are run for a new application version as a first indicator of application health.
+
+  You do not see much else here as it is not needed. But we have a bit more options defined, for example:
+  - What directory is the script in.
+  - What is the name of this script - it does not have to be named runtest.sh
+  - What architectures we can run this test on or which one we exclude.
+  - What is the timeout of this test so that the machine can kill the execution after that.
+  - Tagging for some other automation logic - like `gate`.
+  - What extra packages to install for this test.
+
+- ### The runtest.sh
+
+  This file is the main script that will be run in the machine and you will see it does some logic I have explained.
+
+  The mapper.yaml will be parsed and each `testmapper` item will be executed for example as `'./runtest.sh start_via_command'` but still based on mapper definition.
+
+  Detailed description:
+  - Set some variables for later.
+  - Define set of non-repeating tests. We do not repeat tests that are known to fail for various reason like bugs or test instability.
+  - We are installing `dogtail` as an rpm. It is rare but there can be a situation when that repository is not available when the machine is being installed. Lets not fail here and try to install the `dogtail` one more time.
+  - Setup the `opencv`
+  - Setup `qecore` - we do this here because not every project is using `qecore` for example `NetworkManager`. So we install qecore only in projects that require it.
+  - Define different start for `x86_64` and other architectures and define a number of fails the test can go through before we say it failed.
+  - List coredumpctl so that we know if the component coredumped. The test can pass and the component can still generate coredump entry.
+  - Make the actual data upload to our CI. Since our html logs are self contained with everything we need.
+
 # Examples
 
+  TODO pending review and final selection of arcite location.
   - Video prepared, side by side of session with command line: ![Single Run Example](gnome_terminal_test_example.webm)
   - Backtrace from coredump example: **backtrace_from_coredump_zenity_example.html**
   - Full html report page: **full_report_example.html**
