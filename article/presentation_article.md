@@ -693,7 +693,7 @@ I have started to develop qecore only a few years back so this project is relati
   git checkout fedora-38
   ```
 
-  Now that we are in the project directory. Lets do the start the first test to make sure everything is running smoothly. Start the `qecore-headless` as a user `test`.
+  Now that we are in the project directory. Lets start the first test to make sure everything is running smoothly. Start the `qecore-headless` as a user `test`.
 
   ```sh
   sudo -u test qecore-headless --session-type wayland
