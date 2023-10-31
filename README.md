@@ -1,2 +1,3 @@
 # GNOMETerminalAutomation
-GNOMETerminal Automation Suite
+Automation code for component gnome-terminal.
+
