@@ -1158,6 +1158,20 @@ I have started to develop qecore only a few years back so this project is relati
 
   For me personally there is no comparison of the two but I can see the difficulty of comparison between two images and two objects. Two objects will always be more stable.
 
+# Usage with GTK4
+
+  While what I have described here will work for GTK4 Applications you will soon find that there are extra steps required.
+
+  There is a question of `shadows`. GTK4 applications have large shadows and that shadow left upper corner is the base (0, 0) of the application. So when you attempt to click the click will be very much in the wrong place.
+
+  To fix this you can use the `update_coords()` method from `dogtail.rawinput` to offset (x, y) of the final coordinate. I still hope I will be able to remove this method in the future and figure out the size of the `shadows` dynamically based on the application so that the user is not forced to make manually offset for all clicks. Because that offset, while working with GTK4, will now cause the GTK3 applications actions to be in the wrong place and there is no reason for a suite to not use both.
+
+# Usage with Fedora 39
+
+  Please beware that this article is for Fedora 38. While it will work on 39 too, there are some design changes that the `qecore` is not yet adapted for. Like the `Activities` label missing which `qecore` currently uses for closing shell overview.
+
+  This suite will work on Fedora 39 as is, but you will see some tests failing.
+
 # Reason for this article.
 
   There is another reason for this article apart from showcasing our solution.
