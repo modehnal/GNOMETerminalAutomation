@@ -816,6 +816,8 @@ I have started to develop qecore only a few years back so this project is relati
     cd - # Swtich back to gnome-terminal directory.
     ```
 
+
+    ### This section is no longer valid. Jose found an issue that caused the gnome-ponytail-daemon to hang. Issue was fixed but kept here for visibility.
     There is also possibility that the running daemon is faulty (happened to me while testing this article). When you kill the running daemon the new one will start and it will once again work.
     ```sh
     # Find pid of the daemon.
