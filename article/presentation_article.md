@@ -782,6 +782,8 @@ I have started to develop qecore only a few years back so this project is relati
 
   If you will attempt to write new tests I imagine you will encounter some issues that you can fix yourselfs based on the error provided.
 
+  Now you can run any test that is present in `gnome-terminal` project. To see what tests are present you can look at the `mapper.yaml` file to `testmapper` section or browse the `feature` files and see what `tags` are defined. Or you can simply run it all with `'$ behave'`
+
 ## Errors you can encounter.
 
   - ## **ModuleNotFoundError: No module named 'ponytail'**
