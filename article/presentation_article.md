@@ -1141,7 +1141,7 @@ I have started to develop qecore only a few years back so this project is relati
 # Examples
 
   TODO pending review and final selection of arcite location.
-  - Video prepared, side by side of session with command line: ![Single Run Example](gnome_terminal_test_example.webm)
+  - Video prepared, side by side of session with command line: ![Single Run Example](../data_folder/gnome_terminal_test_example.webm)
   - Backtrace from coredump example: **backtrace_from_coredump_zenity_example.html**
   - Full html report page: **full_report_example.html**
   - Headless troubleshooting on start up issues: **headless_colour_troubleshooting.png**
