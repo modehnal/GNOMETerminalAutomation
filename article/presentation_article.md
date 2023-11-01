@@ -28,8 +28,8 @@
       - Install the API - `dogtail`
       - Build and Install the helper daemon for Wayland automation - `gnome-ponytail-daemon`
       - Install the DestkopQE's automation tools - `qecore`
-    - Clone the GNOME Terminal test suite
-    - Start of the automation suite
+      - Clone the GNOME Terminal test suite
+      - Start of the automation suite
     - Errors you can encounter
     - The main queries you will be using
     - Explaining the rest of the `gnome-terminal` project.
@@ -683,106 +683,106 @@ I have started to develop qecore only a few years back so this project is relati
     python3 -m pip install qecore==3.20
     ```
 
-## Clone the GNOME Terminal test suite.
+  - ### Clone the GNOME Terminal test suite.
 
-  I have prepared a github repository with the contents of the GNOME Terminal test suite.
+    I have prepared a github repository with the contents of the GNOME Terminal test suite.
 
-  ```
-  git clone https://github.com/modehnal/GNOMETerminalAutomation.git
-  cd GNOMETerminalAutomation/gnome-terminal
-  git checkout fedora-38
-  ```
+    ```
+    git clone https://github.com/modehnal/GNOMETerminalAutomation.git
+    cd GNOMETerminalAutomation/gnome-terminal
+    git checkout fedora-38
+    ```
 
-  Now that we are in the project directory. Lets start the first test to make sure everything is running smoothly. Start the `qecore-headless` as a user `test`.
+    Now that we are in the project directory. Lets start the first test to make sure everything is running smoothly. Start the `qecore-headless` as a user `test`.
 
-  ```sh
-  sudo -u test qecore-headless --session-type wayland
-  ```
+    ```sh
+    sudo -u test qecore-headless --session-type wayland
+    ```
 
-  Remember that `qecore-headless` will work out of the box on Fedora 38 so if you encounter any error, try to run the `qecore-headless` script one more time. Once there is one session restart, the `qecore-headless` should fix most of the issues and configure the machine for our automation.
+    Remember that `qecore-headless` will work out of the box on Fedora 38 so if you encounter any error, try to run the `qecore-headless` script one more time. Once there is one session restart, the `qecore-headless` should fix most of the issues and configure the machine for our automation.
 
-  To verify all went well, you should see output that has these parts.
-  ```sh
-  headless: Starting Display Manager # This will tell you that attempt to start GDM has happened.
-  headless: Running 'wayland' with desktop 'gnome' # This will inform you that GDM has started and correct configuration is loaded.
-  headless: Started the script with PID <INT> # This is the last line that will let you know you can continue the work. The PID belongs to the `bash` you are now in.
-  ```
+    To verify all went well, you should see output that has these parts.
+    ```sh
+    headless: Starting Display Manager # This will tell you that attempt to start GDM has happened.
+    headless: Running 'wayland' with desktop 'gnome' # This will inform you that GDM has started and correct configuration is loaded.
+    headless: Started the script with PID <INT> # This is the last line that will let you know you can continue the work. The PID belongs to the `bash` you are now in.
+    ```
 
-## Start of the automation suite.
+  - ### Start of the automation suite.
 
-  So now that you have running session. We can finally execute the automation. Lets do the simplest test. Start of the GNOME Terminal.
+    So now that you have running session. We can finally execute the automation. Lets do the simplest test. Start of the GNOME Terminal.
 
-  It will fail without `gedit` but do not be alarmed.
+    It will fail without `gedit` but do not be alarmed.
 
-  ```sh
-  behave -kt start_via_command
-  ```
+    ```sh
+    behave -kt start_via_command
+    ```
 
-  You will get the following error. I have left it there intentionally for demonstration and we will fix it right away.
+    You will get the following error. I have left it there intentionally for demonstration and we will fix it right away.
 
-  ```sh
-  Environment error: before_all: Desktop file of application 'gedit' was not found.
-  Traceback (most recent call last):
-    File "features/environment.py", line 41, in before_all
-      context.gedit = context.sandbox.get_application(name="gedit")
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/usr/local/lib/python3.11/site-packages/qecore/sandbox.py", line 577, in get_application
-      new_application = Application(
-                        ^^^^^^^^^^^^
-    File "/usr/local/lib/python3.11/site-packages/qecore/application.py", line 102, in __init__
-      self.get_desktop_file_data()
-    File "/usr/local/lib/python3.11/site-packages/qecore/application.py", line 160, in get_desktop_file_data
-      raise UserWarning(
-  UserWarning: Desktop file of application 'gedit' was not found.
-  ```
+    ```sh
+    Environment error: before_all: Desktop file of application 'gedit' was not found.
+    Traceback (most recent call last):
+      File "features/environment.py", line 41, in before_all
+        context.gedit = context.sandbox.get_application(name="gedit")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/usr/local/lib/python3.11/site-packages/qecore/sandbox.py", line 577, in get_application
+        new_application = Application(
+                          ^^^^^^^^^^^^
+      File "/usr/local/lib/python3.11/site-packages/qecore/application.py", line 102, in __init__
+        self.get_desktop_file_data()
+      File "/usr/local/lib/python3.11/site-packages/qecore/application.py", line 160, in get_desktop_file_data
+        raise UserWarning(
+    UserWarning: Desktop file of application 'gedit' was not found.
+    ```
 
-  This is letting you know that as a user you did some kind of mistake. The error in `environment` should never be seen. The `sandbox` is designed to run only if the environment is configured properly.
+    This is letting you know that as a user you did some kind of mistake. The error in `environment` should never be seen. The `sandbox` is designed to run only if the environment is configured properly.
 
-  For the error above, simply install `gedit` that is used in some tests.
+    For the error above, simply install `gedit` that is used in some tests.
 
-  ```sh
-  dnf install gedit
-  ```
+    ```sh
+    dnf install gedit
+    ```
 
-  And run it again.
+    And run it again.
 
-  ```sh
-  behave -kt start_via_command
-  ```
+    ```sh
+    behave -kt start_via_command
+    ```
 
-  You should get the following output.
-  ```
-  [test@localhost-live gnome-terminal]$ behave -kt start_via_command
-  Authorization required, but no authorization protocol specified
+    You should get the following output.
+    ```
+    [test@localhost-live gnome-terminal]$ behave -kt start_via_command
+    Authorization required, but no authorization protocol specified
 
-  (behave:42653): dbind-WARNING **: 09:12:58.193: Could not open X display
-  No such key “introspect”
-  @general_feature
-  Feature: General Tests # features/scenarios/1_general.feature:2
-  Creating logfile at /tmp/dogtail-test/logs/behave_20231026-091258_debug ...
-  Clicking on [toggle button | ]
-  Mouse button 1 click at (49.5,16.0)
+    (behave:42653): dbind-WARNING **: 09:12:58.193: Could not open X display
+    No such key “introspect”
+    @general_feature
+    Feature: General Tests # features/scenarios/1_general.feature:2
+    Creating logfile at /tmp/dogtail-test/logs/behave_20231026-091258_debug ...
+    Clicking on [toggle button | ]
+    Mouse button 1 click at (49.5,16.0)
 
-    @start_via_command
-    Scenario: Start application via command.       # features/scenarios/1_general.feature:6
-      * Start application "terminal" via "command" # ../../../../usr/local/lib/python3.11/site-packages/qecore/common_steps.py:216 0.496s
+      @start_via_command
+      Scenario: Start application via command.       # features/scenarios/1_general.feature:6
+        * Start application "terminal" via "command" # ../../../../usr/local/lib/python3.11/site-packages/qecore/common_steps.py:216 0.496s
 
-  1 feature passed, 0 failed, 6 skipped
-  1 scenario passed, 0 failed, 95 skipped
-  1 step passed, 0 failed, 1062 skipped, 0 undefined
-  Took 0m0.496s
-  [test@localhost-live gnome-terminal]$
-  ```
+    1 feature passed, 0 failed, 6 skipped
+    1 scenario passed, 0 failed, 95 skipped
+    1 step passed, 0 failed, 1062 skipped, 0 undefined
+    Took 0m0.496s
+    [test@localhost-live gnome-terminal]$
+    ```
 
-  You can immidiatelly see that the test has passed and everything went well.
+    You can immidiatelly see that the test has passed and everything went well.
 
-  You can see some data noise which we can ignore for now.
+    You can see some data noise which we can ignore for now.
 
-  If anything went wrong let me know in the github Issues https://github.com/modehnal/GNOMETerminalAutomation/issues or email (TODO MAYBE NOT EMAIL? GITHUB ISSUE SHOULD BE ENOUGH, NOT SURE - REVIEW PENDING) but if you followed everything it should work.
+    If anything went wrong let me know in the github Issues https://github.com/modehnal/GNOMETerminalAutomation/issues or email (TODO MAYBE NOT EMAIL? GITHUB ISSUE SHOULD BE ENOUGH, NOT SURE - REVIEW PENDING) but if you followed everything it should work.
 
-  If you will attempt to write new tests I imagine you will encounter some issues that you can fix yourselfs based on the error provided.
+    If you will attempt to write new tests I imagine you will encounter some issues that you can fix yourselfs based on the error provided.
 
-  Now you can run any test that is present in `gnome-terminal` project. To see what tests are present you can look at the `mapper.yaml` file to `testmapper` section or browse the `feature` files and see what `tags` are defined. Or you can simply run it all with `'$ behave'`
+    Now you can run any test that is present in `gnome-terminal` project. To see what tests are present you can look at the `mapper.yaml` file to `testmapper` section or browse the `feature` files and see what `tags` are defined. Or you can simply run it all with `'$ behave'`
 
 ## Errors you can encounter.
 
