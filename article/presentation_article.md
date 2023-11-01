@@ -380,7 +380,7 @@ I have started to develop qecore only a few years back so this project is relati
       - to embed all data we have despite the test results (default behaviour is to embed debug data only on failed runs to save space)
       - enable backtrace generation from coredumps with debuginfo and debugsource installation (this takes a lot of time and space so default behaviour is skip backtrace fetching)
       - enable other G_DEBUG options.
-    - Some initial debugs and checks.
+    - Some initial debugging and checks.
     - Incialization of default suite run.
     - Retrieve system data like architecture, distribution, display, session desktop and type. We need to differentiate sometimes based on these so the `'context.sandbox'` will provide all the data for the suite.
     - The parameters of the class are a name of the test suite and the context, which is required to get the data from context to `TestSandbox` where we can manipulate it.
@@ -466,7 +466,7 @@ I have started to develop qecore only a few years back so this project is relati
       - Creates new keyring so that we are not bothered by polkit dialogs during the suite run.
       - Returning to the home workspace.
       - Starts the recording - this is priceless when debugging or reporting bugs. Video of the bug reproducer ready to go.
-      - There are more things but many of there are not important in the context of this article.
+      - There are more things but many of them are not important in the context of this article.
 
   - ### After Scenario.
 
