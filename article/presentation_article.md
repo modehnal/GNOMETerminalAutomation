@@ -606,7 +606,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   Since we have test suites that can be destructive to the system and/or change the system configuration, we do not start the automation on our local machines. We have a local Virtual Machines with given distributions ready and we connect to them via ssh. If anything goes wrong during development of the suite, we would break only the VM which can be fixed or snapshotted back and in case of a unrecoverable issue, we will still be fine since the VM's only purpose was running the suites and setting up a new one is trivial.
 
-  This setup is handled by our CI, which is why when trying this you will have to do this setup once by hand.
+  This setup is generally handled by our CI, which is why when trying this you will have to do this setup once by hand.
 
 - ### Setup the Virtual Machine.
 
