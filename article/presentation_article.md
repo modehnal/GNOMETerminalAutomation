@@ -1,47 +1,35 @@
 # Title: GNOME Terminal automation on Fedora 38 with Wayland.
 
-
-# Chapters
-
-  - Introduction
-
-  - What are we using? Automation API - `dogtail`
-  - Usage with Wayland - `gnome-ponytail-daemon`
-  - Giving the API a structure to be used in automation - `behave`
-  - The test result page in form of `behave-html-pretty-formatter` project
-  - The QECORE project
-    - Starting new session
-    - Sandbox configuration
-    - Application configuration
-    - Before Scenario
-    - After Scenario
-    - Commonly used steps
-      - Common steps debugging
-    - Other functionality
-    - Summary for the qecore and why we need it
-
-  - Full project example
-    - Basic setup required before any action
-      - Setup the Virtual Machine
-      - User creation
-    - Installing, building and execution
-      - Install the API - `dogtail`
-      - Build and Install the helper daemon for Wayland automation - `gnome-ponytail-daemon`
-      - Install the DestkopQE's automation tools - `qecore`
-      - Clone the GNOME Terminal test suite
-      - Start of the automation suite
-    - Errors you can encounter
-    - The main queries you will be using
-    - Explaining the rest of the `gnome-terminal` project.
-
-  - Examples
-
-  - Comparison of OpenQA vs Accessibility
-  - Reason for this article
-
-  - Future Plans/Aspirations -> GNOMEAutomation
-  - Finally
-  - Sources
+# Table of contents
+- [Title: GNOME Terminal automation on Fedora 38 with Wayland.](#title-gnome-terminal-automation-on-fedora-38-with-wayland)
+- [Table of contents](#table-of-contents)
+- [Introduction](#introduction)
+- [Automation stack for GNOME Applications](#automation-stack-for-gnome-applications)
+  - [What are we using? Automation API - dogtail](#what-are-we-using-automation-api---dogtail)
+  - [Usage with Wayland - gnome-ponytail-daemon](#usage-with-wayland---gnome-ponytail-daemon)
+  - [Giving the API a structure to be used in automation - behave](#giving-the-api-a-structure-to-be-used-in-automation---behave)
+  - [The test result page in form of `behave-html-pretty-formatter` project](#the-test-result-page-in-form-of-behave-html-pretty-formatter-project)
+  - [The QECORE project](#the-qecore-project)
+- [Full project example.](#full-project-example)
+  - [Basic machine setup required before any action.](#basic-machine-setup-required-before-any-action)
+  - [Installing, building and execution.](#installing-building-and-execution)
+  - [Errors you can encounter.](#errors-you-can-encounter)
+  - [The main queries you will be using.](#the-main-queries-you-will-be-using)
+  - [Explaining the rest of the gnome-terminal project.](#explaining-the-rest-of-the-gnome-terminal-project)
+- [Examples](#examples)
+- [Comparison of OpenQA vs Accessibility](#comparison-of-openqa-vs-accessibility)
+- [Usage with GTK4](#usage-with-gtk4)
+- [Usage with Fedora 39](#usage-with-fedora-39)
+- [Reason for this article.](#reason-for-this-article)
+- [Future Plans/Aspirations -\> GNOMEAutomation](#future-plansaspirations---gnomeautomation)
+  - [Qecore](#qecore)
+  - [Accessibility](#accessibility)
+  - [Behave](#behave)
+  - [Dogtail](#dogtail)
+  - [Ponytail](#ponytail)
+  - [The behave-html-pretty-formatter - self contained user facing report page.](#the-behave-html-pretty-formatter---self-contained-user-facing-report-page)
+- [Finally](#finally)
+- [Sources](#sources)
 
 
 # Introduction
@@ -56,7 +44,11 @@ I will explain in great detail what we are using, how are we using it, how to do
 
 Disclaimer: Nobody is perfect and we are no exceptions. If you see anything that we are doing wrong, let us know. We love to learn and would welcome any feedback that would improve our automation suites.
 
-# What are we using? Automation API - dogtail
+# Automation stack for GNOME Applications
+
+First lets go over individual parts of our automation stack that we use.
+
+## What are we using? Automation API - dogtail
 
 We are using Assistive Technology - Service Provider Interface (AT-SPI) which is a set of interfaces that allow access technologies such as screen readers to programmatically determine what is being displayed on the screen and simulate keyboard and mouse events. It can also be used for automated testing.
 
@@ -112,7 +104,7 @@ Here you can see a very minimal example of how we interact with applications, pr
 I will give more thorough example within the `'gnome-terminal'` project.
 
 
-# Usage with Wayland - gnome-ponytail-daemon
+## Usage with Wayland - gnome-ponytail-daemon
 
 While the example provided above will work for Xorg. For Wayland there is an extra step we need to do to successfuly navigate the application via correct coordinates.
 
@@ -136,7 +128,7 @@ I will show how to build and use ponytail in the `Full project example` section.
 
 Project repository is located here https://gitlab.gnome.org/ofourdan/gnome-ponytail-daemon
 
-# Giving the API a structure to be used in automation - behave
+## Giving the API a structure to be used in automation - behave
 
 So now we have explained what APIs we use at the base level. Now we need some structure to use this and have the code base scalable.
 We use behave https://github.com/behave/behave and its file structure as our automation structure.
@@ -258,7 +250,7 @@ Feature: Dummy Feature
 
 I have mention separating test scenarios executed to their own result pages. That is what the project `behave-html-pretty-formatter` is for.
 
-# The test result page in form of `behave-html-pretty-formatter` project
+## The test result page in form of `behave-html-pretty-formatter` project
 
 The result of the behave run you saw above is given to the console in the `pretty` format, which is a `Standard colourised pretty formatter`. Behave has quite a lot of formatters to use. These formatters are built-in and can be chosen from to get the resulted data in quite a lot of formats ready to be used for various purposes.
 
@@ -311,7 +303,7 @@ We can now start the automating. Although for the purposes of general automation
 
 The project page can be found here https://github.com/behave-contrib/behave-html-pretty-formatter.
 
-# The QECORE project
+## The QECORE project
 
 Qecore is a library of tools and commonly used functions that are required throughout our entire automation stack.
 
