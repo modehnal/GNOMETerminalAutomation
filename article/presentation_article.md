@@ -1214,7 +1214,7 @@ I have started to develop qecore only a few years back so this project is relati
 
 ## The behave
 
-  Its file strucure is our project template and all other things are going before or after the behave command line exection. Behave has limitations that we have to hack around sometimes to get our desired outcome, those are rare althought we have a recent example.
+  Its file strucure is our project template and all other things are going before or after the behave command line execution. Behave has limitations that we have to hack around sometimes to get our desired outcome, those are rare althought we have a recent example.
 
   We need to generate log no matter what part fails, so that the end user can evaluate what went wrong. The problem starts when the very first function is called, before_all. Something can still go wrong and we need to attach the data to the report. The problem is that behave even if it was called as 'behave -f html-pretty', behave "does not know" about the formatter in the before_all function. So when we are dealing with an error in setup we have nowhere to attach it to. We can bypass it by saving the error and evaluate any errors in the very next function before_scenario, end the run, and attach it to the report since behave now knows it has a formatter defined. This is workaroundable but quite inconvinient.
 
