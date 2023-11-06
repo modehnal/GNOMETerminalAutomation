@@ -24,10 +24,10 @@
 - [Future Plans/Aspirations -\> GNOMEAutomation](#future-plansaspirations---gnomeautomation)
   - [Qecore](#qecore)
   - [Accessibility](#accessibility)
-  - [Behave](#behave)
-  - [Dogtail](#dogtail)
-  - [Ponytail](#ponytail)
-  - [The behave-html-pretty-formatter - self contained user facing report page.](#the-behave-html-pretty-formatter---self-contained-user-facing-report-page)
+  - [The behave](#the-behave)
+  - [The dogtail API](#the-dogtail-api)
+  - [The gnome-ponytail-daemon](#the-gnome-ponytail-daemon)
+  - [The behave-html-pretty-formatter](#the-behave-html-pretty-formatter)
 - [Finally](#finally)
 - [Sources](#sources)
 
@@ -1209,7 +1209,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   With project like this we also might have a wider base for Fedora testing days. Some things already work on Fedora and is mostly usable. The issue is setup which this project would solve. I would imagine that once test day comes we could have gitlab/hub page with our testing suites that I and others would contribute to so that anyone can just come, download the project and run the tests. This would be quite rich source of data that user would not have to spend a lot of time on. Simply boot VM and run the suits, report results. There is of course a need for real HW testing but that is not the issue we are trying to solve here. Currently I try to participate in test days but I am not able to fit it to my schedule every time, which is a shame.
 
-## Behave
+## The behave
 
   Its file strucure is our project template and all other things are going before or after the behave command line exection. Behave has limitations that we have to hack around sometimes to get our desired outcome, those are rare althought we have a recent example.
 
@@ -1219,14 +1219,14 @@ I have started to develop qecore only a few years back so this project is relati
 
   `Aspiration` is to not have behave dictate our structure, possibilities and output but having project that enables our wants/needs/requirements. But again, behave works perfectly fine in majority of our cases - no reason to reimplement something that exists with small changes. There is currently no proper reason to remove behave from our solution.
 
-## Dogtail
+## The dogtail API
 
   This project serves as our API, it has its set of problems while  it still works in majority of the time.
 
   Currently there is no incentive to focus on reimplementation as what we now have works fine and most of our suites are written and are being adapted between package and system versions. There are situations where new feature or bug appears and we include it in our suite but that is using previously used functions so there is nothing new from the testing point of view.
 
   I am going to include personal experience when I first started working at Red Hat.
-  I was assigned a responsibility of a project gnome-contacts. The automation was already written and I was required to understand the code, learn how to use it, modify it and improve it. At first I was just copying around what was already there and I had no issues making it work. Until I encountered a strange artifact, function not working. It was the same as any other used in the code. I had no idea why it was not working. I found dogtail source code and went though it and I saw nothing wrong. No one was able to help me as they did not see anything wrong on the dogtail side either. So I marked the test as broken or simply worked around it, I do not remember. It was quite a while before I realized the dogtail is not an API but wrapper around others. So I started looking for the other libraries imported in dogtail, in pyatspi2 and finally Atspi. I found a documentation that I do not believe was up to date but it was usable. I found the C source code. I went through it to verify missing documentation parts. I still do not know the exact source code and documentation, I might have been looking at the wrong place altogether. Most of the stuff I tried that I know are or are not working is a result of experimentations. As I mentioned there is not much time so trial and error was the chosen solution. I started making reproducer in Atspi, only to find I am able to reproduce the issue I had in the past quite a lot and always thought the dogtail was not working.
+  I was assigned a responsibility of a project gnome-contacts. The automation was already written and I was required to understand the code, learn how to use it, modify it and improve it. At first I was just copying around what was already there and I had no issues making it work. Until I encountered a strange artifact, function not working. It was the same as any other used in the code. I had no idea why it was not working. I found dogtail source code and went though it and I saw nothing wrong. No one was able to help me as they did not see anything wrong on the dogtail side either. So I marked the test as broken or simply worked around it, I do not remember. It was quite a while before I realized the dogtail is not an API but wrapper around others. So I started looking for the other libraries imported in dogtail, in pyatspi2 and finally Atspi. I found a documentation that I do not believe was up to date but it was usable. I found the C source code. I went through it to verify missing documentation parts. I still do not know the exact source code and documentation, I might have been looking at the wrong place altogether. Most of the stuff I tried that I know, are or are not working, is a result of experimentations. As I mentioned there is not much time so trial and error was the chosen solution. I started making reproducer in Atspi, only to find I am able to reproduce the issue I had in the past quite a lot and always thought the dogtail was not working.
 
   The point is that the issue that was in the code for years was not identified because no one knew where to look. I had no one to teach me where to look or to say that the problem might be somewhere else because it was poorly documented and I did not find any tutorials how to debug such issues.
 
@@ -1236,12 +1236,12 @@ I have started to develop qecore only a few years back so this project is relati
 
   The GNOMEAutomation would provide API just like dogtail but wrapping only over Atspi so any issue that is found will have a single source. The best case scenario would be pointing developers to the API and have them see that we are using the Atspi functions so it cannot be an issue we introduced. They will also get a reproducer directly to the Atspi and will not have to deal with our environment. In the worst case, installing GNOMEAutomation with given project it was reproduced in which would be startable right away without any difficult setup. Documentation will be present from the start (I have a habit to have docstring and proper documentations everywhere) so no one will be needed to go on long searches to figure out what is wrong and where.
 
-## Ponytail
+## The gnome-ponytail-daemon
 
   I would imagine there is a way how to include it in this project so any issue can be tracked accordingly.
   This project was originally created to enable us continuing working on Wayland. Its hard to imagine anyone but us using gnome-ponytail-daemon but I could be proven wrong.
 
-## The behave-html-pretty-formatter - self contained user facing report page.
+## The behave-html-pretty-formatter
 
   I made a proof of concept of the formatter and our team improved upon the concept which became our new formatter. The formatter was required to be written in a way to fit in our current solution. It had to be done as a standalone project. Which on its own is just bare bones so that it also can be used by upstream (we were surprised how many people are using it already). We are still generating the data with qecore.
 
