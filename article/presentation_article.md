@@ -1148,7 +1148,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   On the other hand with Atspi, if we see a failed test, most of the times it is a bug or the UI label or placement has changed. On bugs the issue is clear and there is nothing to be changed on automation side. On UI change we check Screenshot or Video to see what happened and usually we can fixed the test very quickly by changing order of clicks or rewritting a string. Stability of our tests is incredible. Once the suite is written, it can be easily expanded with new test cases and maintained through different version releases.
 
-  For me personally there is no comparison of the two but I can see the difficulty of comparison between two images and two objects. Two objects will always be more stable.
+  For me personally there is no comparison of the two but I can see the difficulty of comparison between two images and two objects. Working with objects will always be more stable.
 
 # Usage with GTK4
 
