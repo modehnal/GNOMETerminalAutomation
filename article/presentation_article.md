@@ -42,7 +42,7 @@ In this article I will show and explain how our team (DeskopQE) uses Accessibili
 
 I will explain in great detail what we are using, how are we using it, how to do basic setup and execution of a testing suite. After reading this article you will have gained enough information to succesfully start `gnome-terminal` automation suite on Fedora 38 with Wayland.
 
-Disclaimer: Nobody is perfect and we are no exceptions. If you see anything that we are doing wrong, let us know. We love to learn and would welcome any feedback that would improve our automation suites.
+Please keep in mind that nobody is perfect and we are no exceptions. If you see anything that we are doing wrong, let us know. We love to learn and would welcome any feedback that would improve our automation suites.
 
 # Automation stack for GNOME Applications
 
