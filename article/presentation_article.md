@@ -6,10 +6,10 @@
 - [Introduction](#introduction)
 - [Automation stack for GNOME Applications](#automation-stack-for-gnome-applications)
   - [What are we using? Automation API - dogtail](#what-are-we-using-automation-api---dogtail)
-  - [Usage with Wayland - gnome-ponytail-daemon](#usage-with-wayland---gnome-ponytail-daemon)
+  - [How are we dealing with automation on Wayland? The gnome-ponytail-daemon](#how-are-we-dealing-with-automation-on-wayland-the-gnome-ponytail-daemon)
   - [Giving the API a structure to be used in automation - behave](#giving-the-api-a-structure-to-be-used-in-automation---behave)
-  - [The test result page in form of `behave-html-pretty-formatter` project](#the-test-result-page-in-form-of-behave-html-pretty-formatter-project)
-  - [The QECORE project](#the-qecore-project)
+  - [The automation suite result page in form of behave-html-pretty-formatter project](#the-automation-suite-result-page-in-form-of-behave-html-pretty-formatter-project)
+  - [Filling all the gaps and providing useful tools with the qecore project](#filling-all-the-gaps-and-providing-useful-tools-with-the-qecore-project)
 - [Full project example.](#full-project-example)
   - [Basic machine setup required before any action.](#basic-machine-setup-required-before-any-action)
   - [Installing, building and execution.](#installing-building-and-execution)
@@ -104,7 +104,7 @@ Here you can see a very minimal example of how we interact with applications, pr
 I will give more thorough example within the `'gnome-terminal'` project.
 
 
-## Usage with Wayland - gnome-ponytail-daemon
+## How are we dealing with automation on Wayland? The gnome-ponytail-daemon
 
 While the example provided above will work for Xorg. For Wayland there is an extra step we need to do to successfuly navigate the application via correct coordinates.
 
@@ -250,7 +250,7 @@ Feature: Dummy Feature
 
 I have mention separating test scenarios executed to their own result pages. That is what the project `behave-html-pretty-formatter` is for.
 
-## The test result page in form of `behave-html-pretty-formatter` project
+## The automation suite result page in form of behave-html-pretty-formatter project
 
 The result of the behave run you saw above is given to the console in the `pretty` format, which is a `Standard colourised pretty formatter`. Behave has quite a lot of formatters to use. These formatters are built-in and can be chosen from to get the resulted data in quite a lot of formats ready to be used for various purposes.
 
@@ -303,7 +303,7 @@ We can now start the automating. Although for the purposes of general automation
 
 The project page can be found here https://github.com/behave-contrib/behave-html-pretty-formatter.
 
-## The QECORE project
+## Filling all the gaps and providing useful tools with the qecore project
 
 Qecore is a library of tools and commonly used functions that are required throughout our entire automation stack.
 
