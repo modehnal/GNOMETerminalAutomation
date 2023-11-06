@@ -351,7 +351,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   - ### Sandbox configuration.
 
-    As I mentioned, we have everything we need already but some commonly used methods and functions need to be executed every single time.
+    We start the suite with some commonly used methods and functions.
 
     This is done with the qecore class `'TestSandbox'` this class will take care of everything. I will use example from the full example of `gnome-terminal` that I will be introducing later in this article.
 
@@ -807,11 +807,11 @@ I have started to develop qecore only a few years back so this project is relati
     # Or by starting it from the build/src/ directory.
     cd /path/to/gnome-ponytail-daemon/build/src/ # Switch to the binary location.
     ./gnome-ponytail-daemon & # Start the script.
-    cd - # Swtich back to gnome-terminal directory.
+    cd - # Switch back to gnome-terminal directory.
     ```
 
 
-    ### This section is no longer valid. Jose found an issue that caused the gnome-ponytail-daemon to hang. Issue was fixed but kept here for visibility.
+    ### This section is no longer valid. José found an issue that caused the gnome-ponytail-daemon to hang. Issue was fixed but kept here for visibility. (Requires merged changes - currently in forked location)
     There is also possibility that the running daemon is faulty (happened to me while testing this article). When you kill the running daemon the new one will start and it will once again work.
     ```sh
     # Find pid of the daemon.
@@ -926,7 +926,9 @@ I have started to develop qecore only a few years back so this project is relati
     Out: 'menu'
 
     In : f.position
-    Out: (26, 70) # Notice that these are coordinates in the application, gnome-ponytail-daemon does the translation for mouse events.
+    Out: (26, 70)
+    # Notice that these are coordinates in the application.
+    # The gnome-ponytail-daemon does the translation for mouse events.
 
     In : f.size
     Out: (40, 27)
@@ -985,7 +987,8 @@ I have started to develop qecore only a few years back so this project is relati
   scroll_pane.value = scroll_pane.maxValue
 
   # Beware that this is very dependant on the Accessibility in the application.
-  # It is not uncommon to have the minValue and maxValue to be both 0.0 in which case you will not be able to scroll this way.
+  # It is not uncommon to have the minValue and maxValue to be both 0.0,
+  # in which case you will not be able to scroll this way.
   ```
 
   Now this was quite writting intensive. Lets say we do not care about a single button, we want to see the entire tree. Again we have multiple options.
