@@ -584,8 +584,8 @@ I have started to develop qecore only a few years back so this project is relati
   - ### Summary for the qecore and why we need it.
 
     While all of this text seems like a lot. From the user point of view there is not much going on. All the user needs is.
-      - Install qecore.
-      - Make very simple setup once.
+      - Install qecore (see the installation bellow).
+      - Make very simple setup once (see the `environment.py` file).
 
     From this point the users are provided with a lot of functions and methods that they do not have to code themselfs.
       - Provides functionality to restart session on all of our supported systems and architectures.
@@ -775,7 +775,7 @@ I have started to develop qecore only a few years back so this project is relati
 
     You can see some data noise which we can ignore for now.
 
-    If anything went wrong let me know in the github Issues https://github.com/modehnal/GNOMETerminalAutomation/issues or email (TODO MAYBE NOT EMAIL? GITHUB ISSUE SHOULD BE ENOUGH, NOT SURE - REVIEW PENDING) but if you followed everything it should work.
+    If anything went wrong let me know in the github Issues https://github.com/modehnal/GNOMETerminalAutomation/issues but if you followed everything it should work.
 
     If you will attempt to write new tests I imagine you will encounter some issues that you can fix yourselfs based on the error provided.
 
