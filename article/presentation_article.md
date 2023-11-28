@@ -331,7 +331,7 @@ I have started to develop qecore only a few years back so this project is relati
     - It will adapt gsettings values which we use most of the time and can sometime be annoying to deal with by hand.
     - It does extensive troubleshooting when the GDM start fails. (TODO LINK IMAGE HERE - pending final article location)
     - It can enforce session type, meaning it will check the system configuration and running session and will fail on missmatch.
-    - It provides `--keep <int>` parameter, enabling to use one session for multiple tests. For example `qecore-headless --keep 5' "behave -kt <test_name>"` will make sure it runs 5 tests before restarting the session.
+    - It provides `--keep <int>` parameter, enabling to use one session for multiple tests. For example `qecore-headless --keep 5 "behave -kt <test_name>"` will make sure it runs 5 tests before restarting the session.
     - I am testing this script on RHEL8/9, Fedoras from version 35 to rawhide and on multiple architectures namely x86_64, ppc64le, aarch64 and s390x. It works on these architectures and systems out of the box.
 
     All in all, this is a base script we start before we start to do anything. The `qecore-headless` is a script that executes another script. In the example above it started `behave -kt <test_name>`. If it does not get any parameter the `bash` is the default script. Which is what we want on our machines where we test by hand. We start the script and after that we only work with behave. While time to time restarting the session simply by `Ctrl+D` or `exit` and starting new `qecore-headless`. Very convinient and easy to use.
