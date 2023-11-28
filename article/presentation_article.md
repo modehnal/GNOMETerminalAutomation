@@ -310,6 +310,8 @@ We can now start the automating. Although for the purposes of general automation
 
 Qecore is a library of tools and commonly used functions that are required throughout our entire automation stack.
 
+The project page can be found here https://gitlab.com/dogtail/qecore.
+
 I have started to develop qecore only a few years back so this project is relatively new and is being continuously developed and improved with new features and is indisposable for our day to day use when working with GNOME Applications.
 
   - ### Starting new session.
