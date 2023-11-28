@@ -585,7 +585,7 @@ I have started to develop qecore only a few years back so this project is relati
       - Install qecore.
       - Make very simple setup once.
 
-    From this point the user is provided with a lot of functions and methods that they do not have to code themselfs.
+    From this point the users are provided with a lot of functions and methods that they do not have to code themselfs.
       - Provides functionality to restart session on all of our supported systems and architectures.
       - Populates our test result output logs with data like `'Error Messages'` `'Screenshots'` `'Videos'` `'Journal'` `'Backtraces'` `'Links'` and `'Logging'`
       - Provides a lot of simple steps that are ready to be used with built-in debugging on error.
@@ -617,7 +617,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   ```sh
   useradd test -G wheel
-  echo 'redhat' | passwd test --stdin # An example password, create any you would like.
+  echo 'password' | passwd test --stdin # An example password, create any you would like.
   echo 'test ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
   ```
 
