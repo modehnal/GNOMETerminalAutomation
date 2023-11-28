@@ -37,7 +37,7 @@
 
 Hello and welcome.
 
-My name is Michal and I'm a Quality Engineer in Red Hat. I've been in Red Hat for over 7 years now and my responsibility is to write, maintain and improve an automation stack for GNOME Applications on RHEL while also having a responsibility for specific components and their automation suites, like `'gnome-control-center'`, `'gnome-terminal'`, `'gnome-shell'`, `'evolution'` and more.
+My name is Michal and I'm a Quality Engineer in Red Hat. I've been in Red Hat for over 7 years now and my responsibility is to write, maintain and improve an automation stack for GNOME Applications on RHEL while also having a responsibility for specific components and their automation suites, like `gnome-control-center`, `gnome-terminal`, `gnome-shell`, `evolution` and more.
 
 In this article I will show and explain how our team (DeskopQE) uses Accessibility to automate and test GNOME Applications.
 
@@ -102,7 +102,7 @@ Here you can see a very minimal example of how we interact with applications, pr
     pressKey("Enter") # Confirm command.
 ```
 
-I will give more thorough example within the `'gnome-terminal'` project.
+I will give more thorough example within the `gnome-terminal` project.
 
 
 ## How are we dealing with automation on Wayland? The gnome-ponytail-daemon
@@ -226,14 +226,14 @@ Now we can run behave.
 ```
 The behave run was a success so now we can use behave to run all of our test cases with ease.
 
-For all of our test cases, we are using tags to differentiate between different scenarios, so while `'$ behave'` will start every single scenario defined in feature files.
-Our best practice is to start test cases one by one and separate them into their own result pages, which I will get into later. So we are running behave like this `'$ behave -kt showing_off_behave'`. The `-k` (note that in development version of behave `v1.2.7.dev#` this is available as `--no-skipped`, in the current pypi version 1.2.6 `-k` is still working) will skip all unexecuted tests so they are not printed in summary and `-t` will match the tag in feature file and will start that one specific scenario. One tag can be used any number of times, so we can mark the whole scenario with one tag and start the execution that will run multiple tests.
+For all of our test cases, we are using tags to differentiate between different scenarios, so while `$ behave` will start every single scenario defined in feature files.
+Our best practice is to start test cases one by one and separate them into their own result pages, which I will get into later. So we are running behave like this `$ behave -kt showing_off_behave`. The `-k` (note that in development version of behave `v1.2.7.dev#` this is available as `--no-skipped`, in the current pypi version 1.2.6 `-k` is still working) will skip all unexecuted tests so they are not printed in summary and `-t` will match the tag in feature file and will start that one specific scenario. One tag can be used any number of times, so we can mark the whole scenario with one tag and start the execution that will run multiple tests.
 
-For the example bellow, we can start specific test by `'$ behave -kt dummy_1'` or run them both as `'$ behave -kt dummy'`. Of course if we have only those 2 the equivalent command is `'$ behave'`. If there are many more tests, we do not want to duplicate the tag too many times, therefore we can tag the entire feature file and start all scenarios in given feature file as `'$ behave -kt dummy_feature'`.
+For the example bellow, we can start specific test by `$ behave -kt dummy_1` or run them both as `$ behave -kt dummy`. Of course if we have only those 2 the equivalent command is `$ behave`. If there are many more tests, we do not want to duplicate the tag too many times, therefore we can tag the entire feature file and start all scenarios in given feature file as `$ behave -kt dummy_feature`.
 
-To use more finer execution of a few tests from a larger set, you can execute the behave with a list of tags `'$ behave -k --tags="dummy_1,dummy_2"'`.
+To use more finer execution of a few tests from a larger set, you can execute the behave with a list of tags `$ behave -k --tags="dummy_1,dummy_2"`.
 
-Note that instead of `'Given'`, `'When'`, `'Then'`, `'And'` and `'But'` we can use asterisk `*` to prefix all steps in feature files. We use asterisk in most cases.
+Note that instead of `Given`, `When`, `Then`, `And` and `But` we can use asterisk `*` to prefix all steps in feature files. We use asterisk in most cases.
 
 ```gherkin
 
@@ -292,7 +292,7 @@ This is the `behave.ini` file you will see in the `gnome-terminal` automation ex
   behave.formatter.html-pretty.collapse = auto
 ```
 
-That run will now be executed as `'$ behave -kt dummy -f html-pretty -o test.html'`. This will change the formatter from the default `pretty` to the `html-pretty` that will take the data from behave, transform them and generate self contained html page to the output file `test.html`. Our test result files are named after the test case that was executed but omitted here for simplicity.
+That run will now be executed as `$ behave -kt dummy -f html-pretty -o test.html`. This will change the formatter from the default `pretty` to the `html-pretty` that will take the data from behave, transform them and generate self contained html page to the output file `test.html`. Our test result files are named after the test case that was executed but omitted here for simplicity.
 
 We have made a new formatter `html-pretty` less than a year ago (January 2023) to improve on the old `html` formatter. The new `html-pretty` formatter is coded in very different way and can be more easily enriched with new features. It also is, in our opinion, much cleaner and simpler, while allowing us to have more data available to us. Output of this project allows us to have a self contained html page so that the test result are always in this single file with CSS and JS. The page contains a lot of information. It prints each step and provides data if something goes wrong.
 
@@ -318,23 +318,23 @@ I have started to develop qecore only a few years back so this project is relati
 
     Lets start with another part of our automation stack which cannot be left out and is key to every single test (or at least most of them). While we have everything needed, there are situations where the session or application will freeze or otherwise will become unusable. We would like to do everything in one session but from our experiences, this is in most cases not ideal or straight up not viable.
 
-    So we need to restart the session on command and start a new one in a moments notice, while not interupting the test suite run. This is provided by `qecore` in form of a script `'qecore-headless'`. The naming of the script is purely historical. it comes from the times we were running our suites on headless systems with dummy drivers. Currently it serves as our session configuration tool. We run every single test in new session, meaning that the test starts, the new GDM session is started, the test will execute, report result and GDM session will be stopped. That way the next test will start with new session and no cleanup is required (although if qecore is setup correctly it will do the cleanup in the session and enable multiple runs in single session).
+    So we need to restart the session on command and start a new one in a moments notice, while not interupting the test suite run. This is provided by `qecore` in form of a script `qecore-headless`. The naming of the script is purely historical. it comes from the times we were running our suites on headless systems with dummy drivers. Currently it serves as our session configuration tool. We run every single test in new session, meaning that the test starts, the new GDM session is started, the test will execute, report result and GDM session will be stopped. That way the next test will start with new session and no cleanup is required (although if qecore is setup correctly it will do the cleanup in the session and enable multiple runs in single session).
 
-    The `'qecore-headless'` script provides much more than that though.
+    The `qecore-headless` script provides much more than that though.
     - Enables accessibility toolkit.
     - It changes GDM custom.conf configuration to autologin test user without password so that the GDM login page is not in the way.
     - It takes care of environment variables that are required for the system and for our suites which will be used by every python behave run.
-    - It configures user session in sense that you can choose if you would like to start Xorg `'qecore-headless --session-type xorg'` or Wayland `'qecore-headless --session-type wayland'`.
-    - It is able to configure user desktop, namely GNOME `'qecore-headless --session-desktop gnome'` and GNOME Classic `'qecore-headless --session-desktop gnome-classic'`.
+    - It configures user session in sense that you can choose if you would like to start Xorg `qecore-headless --session-type xorg` or Wayland `qecore-headless --session-type wayland`.
+    - It is able to configure user desktop, namely GNOME `qecore-headless --session-desktop gnome` and GNOME Classic `qecore-headless --session-desktop gnome-classic`.
     - It makes sure the restart is done cleanly by checking logind.
     - It sets up other configuration to allow use figure out system issues, like issue of accessibility turning off.
     - It will adapt gsettings values which we use most of the time and can sometime be annoying to deal with by hand.
     - It does extensive troubleshooting when the GDM start fails. (TODO LINK IMAGE HERE - pending final article location)
     - It can enforce session type, meaning it will check the system configuration and running session and will fail on missmatch.
-    - It provides `'--keep <int>'` parameter, enabling to use one session for multiple tests. For example `'qecore-headless --keep 5' "behave -kt <test_name>"'` will make sure it runs 5 tests before restarting the session.
+    - It provides `--keep <int>` parameter, enabling to use one session for multiple tests. For example `qecore-headless --keep 5' "behave -kt <test_name>"` will make sure it runs 5 tests before restarting the session.
     - I am testing this script on RHEL8/9, Fedoras from version 35 to rawhide and on multiple architectures namely x86_64, ppc64le, aarch64 and s390x. It works on these architectures and systems out of the box.
 
-    All in all, this is a base script we start before we start to do anything. The `'qecore-headless'` is a script that executes another script. In the example above it started `'behave -kt <test_name>'`. If it does not get any parameter the `'bash'` is the default script. Which is what we want on our machines where we test by hand. We start the script and after that we only work with behave. While time to time restarting the session simply by `'Ctrl+D'` or `'exit'` and starting new `'qecore-headless'`. Very convinient and easy to use.
+    All in all, this is a base script we start before we start to do anything. The `qecore-headless` is a script that executes another script. In the example above it started `behave -kt <test_name>`. If it does not get any parameter the `bash` is the default script. Which is what we want on our machines where we test by hand. We start the script and after that we only work with behave. While time to time restarting the session simply by `Ctrl+D` or `exit` and starting new `qecore-headless`. Very convinient and easy to use.
 
     ```console
       [test@localhost]$ qecore-headless
@@ -358,9 +358,9 @@ I have started to develop qecore only a few years back so this project is relati
 
     We start the suite with some commonly used methods and functions.
 
-    This is done with the qecore class `'TestSandbox'` this class will take care of everything. I will use example from the full example of `gnome-terminal` that I will be introducing later in this article.
+    This is done with the qecore class `TestSandbox` this class will take care of everything. I will use example from the full example of `gnome-terminal` that I will be introducing later in this article.
 
-    The behave file `'environment.py'` has a few defined functions that we can overload and fill with logic that we need. So we are going to use the `'before_all'` and initialize our `'TestSandbox'` class and save it to the variable `'context'` which is a data structure of behave that can be used to save and transfer data throughout all the files during the behave run. We can define our variables in `'context'` so we named it `'context.sandbox'`. From this moment the sandbox class will be available in python behave files and we can use our `'sandbox'`. I again ommited some parts for simplicity, the full example will have the entire structure.
+    The behave file `environment.py` has a few defined functions that we can overload and fill with logic that we need. So we are going to use the `before_all` and initialize our `TestSandbox` class and save it to the variable `context` which is a data structure of behave that can be used to save and transfer data throughout all the files during the behave run. We can define our variables in `context` so we named it `context.sandbox`. From this moment the sandbox class will be available in python behave files and we can use our `sandbox`. I again ommited some parts for simplicity, the full example will have the entire structure.
 
     ```python
     def before_all(context) -> None:
@@ -379,10 +379,10 @@ I have started to develop qecore only a few years back so this project is relati
       - enable other G_DEBUG options.
     - Some initial debugging and checks.
     - Incialization of default suite run.
-    - Retrieve system data like architecture, distribution, display, session desktop and type. We need to differentiate sometimes based on these so the `'context.sandbox'` will provide all the data for the suite.
+    - Retrieve system data like architecture, distribution, display, session desktop and type. We need to differentiate sometimes based on these so the `context.sandbox` will provide all the data for the suite.
     - The parameters of the class are a name of the test suite and the context, which is required to get the data from context to `TestSandbox` where we can manipulate it.
 
-    Now this is already quite a lot but only thing that is needed by the user is to have the class initialized in the `'environment.py'` and `'TestSandbox'` will do the rest.
+    Now this is already quite a lot but only thing that is needed by the user is to have the class initialized in the `environment.py` and `TestSandbox` will do the rest.
 
   - ### Application configuration.
 
@@ -416,7 +416,7 @@ I have started to develop qecore only a few years back so this project is relati
         )
     ```
 
-    From the example you can see that the `'gnome-terminal'` application was saved to the `'context.terminal'` variable. The method called was executed on `'context.sandbox'` which is `'get_application'`. This is required so that `sandbox` can keep the track of all applications defined so that it can do a proper cleanup after the suite ends.
+    From the example you can see that the `gnome-terminal` application was saved to the `context.terminal` variable. The method called was executed on `context.sandbox` which is `get_application`. This is required so that `sandbox` can keep the track of all applications defined so that it can do a proper cleanup after the suite ends.
 
     You can also see the parameters. All of them have their usage to properly identify the desktop file and its presence in Atspi tree. There are some minor debug prints on wrong usage to help new users identify issues. For example when you would not define the `desktop_file_name` for `gnome-terminal` you would get following output prompting the user to specify the `.desktop` file since from the data provided we were not able to decide what the user wanted to use.
 
@@ -432,13 +432,13 @@ I have started to develop qecore only a few years back so this project is relati
         ' ... = context.sandbox.get_application(..., desktop_file_name="", desktop_file_path="")
     ```
 
-    This concludes the `'before_all'` function and this setup will most likely never change apart from .desktop file changes, then you would need to do minor changes to parameters.
+    This concludes the `before_all` function and this setup will most likely never change apart from .desktop file changes, then you would need to do minor changes to parameters.
 
     In the full example you can also see try/except usage. That is for recovery. Some issues can be fixed while running.
 
   - ### Before Scenario.
 
-    Now for the behave's `'before_scenario'` function that gets executed before very test. This is where most of the work will be done by qecore's `sandbox`. But all the user needs to do is to call this method and that is all. Nothing more, nothing less.
+    Now for the behave's `before_scenario` function that gets executed before very test. This is where most of the work will be done by qecore's `sandbox`. But all the user needs to do is to call this method and that is all. Nothing more, nothing less.
 
 
     ```python
@@ -450,7 +450,7 @@ I have started to develop qecore only a few years back so this project is relati
 
     ```
 
-    To list some things that the `'before_scenario'` does.
+    To list some things that the `before_scenario` does.
       - Waiting until `gnome-shell` becomes responsive, there is no point to continue until `gnome-shell` can be found in Atspi tree.
       - Also sets some attributes that can be used to manipulate the run.
       - Set timers for current scenarios.
@@ -467,7 +467,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   - ### After Scenario.
 
-    The behave's `'after_scenario'` function works the same as name implies. This will get executed after every test. As with previous example, all user needs to do is call the single method and the job is done.
+    The behave's `after_scenario` function works the same as name implies. This will get executed after every test. As with previous example, all user needs to do is call the single method and the job is done.
 
       ```python
       def after_scenario(context, scenario) -> None:
@@ -570,15 +570,15 @@ I have started to develop qecore only a few years back so this project is relati
         * Terminal has "2" tabs
     ```
 
-    Debugging of this issue works very simply. If the common step failed to match the name or role name, which are required data fields, search the Application for these labels and print what is present. We can clearly see that the typo was in the name `'Filee'` and no such name exists in given Application tree. We can fix the typo and continue writting tests.
+    Debugging of this issue works very simply. If the common step failed to match the name or role name, which are required data fields, search the Application for these labels and print what is present. We can clearly see that the typo was in the name `Filee` and no such name exists in given Application tree. We can fix the typo and continue writting tests.
 
   - ### Other provided functionality.
 
     The qecore project provides truly a lot for our day to day use. I cannot list and talk about everything as this article is already very long and more is to come. I would still like to list a few other features.
 
-    - **Flatpaks** - just as we are able to load applications with `'get_application'` we also have a function to work with Flatpaks `'get_flatpak'`.
+    - **Flatpaks** - just as we are able to load applications with `get_application` we also have a function to work with Flatpaks `get_flatpak`.
     - **Backtrace** - once there is an issue with the core component we are testing and coredump is detected via `coredumpctl`, qecore will attempt to get backtrace from `gdb` after installing all available debuginfo and debugsource packages that the `gdb` will say it needs. This needs to be toggled on as it takes quite a lot of time and space. You will see the resulting backtrace attached in example report. **backtrace_from_coredump_zenity_example.html**.
-    - **Logging** - we have a continuous logging of qecore and what it does. Once any test fails that logging data is attached to the html report to make sure qecore did not cause the mistake. We also can make sure the qecore is working as intended at all times. This logging can also be directed to the console so user will be able to see it in real time. You can try it in the provided project with `'$ LOGGING=true behave -kt start_via_command'`
+    - **Logging** - we have a continuous logging of qecore and what it does. Once any test fails that logging data is attached to the html report to make sure qecore did not cause the mistake. We also can make sure the qecore is working as intended at all times. This logging can also be directed to the console so user will be able to see it in real time. You can try it in the provided project with `$ LOGGING=true behave -kt start_via_command`
     - **Image matching** - from time to time there is a use case where the accessibility is not working correctly or the accessibility data is not there at all. For these situations we cannot do much, but we took an inspiration from OpenQA. In such cases we can identify widget and parts of the desktop simply with an image (`needle`) and try to find that image in the screenshot we take. These functions will return coordinates to us and we can click to the correct place. The qecore has an image matching section that can be imported and used. It also provides precoded steps that are used in majority of the times. For the times you need to adjust the execution, we provide the `Matcher` class and its methods so that you can build your custom functionality easily. For exact implementation and usage you can look here https://gitlab.com/dogtail/qecore/-/blob/master/qecore/image_matching.py
 
   - ### Summary for the qecore and why we need it.
@@ -589,7 +589,7 @@ I have started to develop qecore only a few years back so this project is relati
 
     From this point the users are provided with a lot of functions and methods that they do not have to code themselfs.
       - Provides functionality to restart session on all of our supported systems and architectures.
-      - Populates our test result output logs with data like `'Error Messages'` `'Screenshots'` `'Videos'` `'Journal'` `'Backtraces'` `'Links'` and `'Logging'`
+      - Populates our test result output logs with data like `Error Messages` `Screenshots` `Videos` `Journal` `Backtraces` `Links` and `Logging`
       - Provides a lot of simple steps that are ready to be used with built-in debugging on error.
       - Provides way to write automate tests with image matching.
 
@@ -615,7 +615,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   There is a possibility that you won't have the password to the users present on the booted iso.
 
-  There will be a `liveuser` with sudo rights so lets create the user `'test'` on the machine, give it a password to use with `ssh` and sudo privileges to prevent any disruption during the automation execution.
+  There will be a `liveuser` with sudo rights so lets create the user `test` on the machine, give it a password to use with `ssh` and sudo privileges to prevent any disruption during the automation execution.
 
   ```sh
   useradd test -G wheel
@@ -623,9 +623,9 @@ I have started to develop qecore only a few years back so this project is relati
   echo 'test ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
   ```
 
-  Now there is a user `'test'` on Fedora 38 VM with sudo privileges, lets `ssh` to the machine.
+  Now there is a user `test` on Fedora 38 VM with sudo privileges, lets `ssh` to the machine.
 
-  Most likely the `'sshd'` service will not being enabled which would produce `'Connection refused'` for the port 22 so you might need to start the `'sshd'` in the VM and enable so it will be started in the future as well.
+  Most likely the `sshd` service will not being enabled which would produce `Connection refused` for the port 22 so you might need to start the `sshd` in the VM and enable so it will be started in the future as well.
 
   ```sh
   systemctl start sshd
@@ -779,7 +779,7 @@ I have started to develop qecore only a few years back so this project is relati
 
     If you will attempt to write new tests I imagine you will encounter some issues that you can fix yourselfs based on the error provided.
 
-    Now you can run any test that is present in `gnome-terminal` project. To see what tests are present you can look at the `mapper.yaml` file to `testmapper` section or browse the `feature` files and see what `tags` are defined. Or you can simply run it all with `'$ behave'`
+    Now you can run any test that is present in `gnome-terminal` project. To see what tests are present you can look at the `mapper.yaml` file to `testmapper` section or browse the `feature` files and see what `tags` are defined. Or you can simply run it all with `$ behave`
 
 ## Errors you can encounter.
 
@@ -876,7 +876,7 @@ I have started to develop qecore only a few years back so this project is relati
     In : app # Type 'app' and press Enter to see what this object is.
     Out: <Atspi.Accessible object ..>
     ```
-    So now we have an `'app'` node which is a Atspi root node of the `gnome-terminal` application.
+    So now we have an `app` node which is a Atspi root node of the `gnome-terminal` application.
 
     You can notice the application name I have made a query for is `gnome-terminal-server`. You will recall that this is the name we need to provide in the `environment.py` file when defining the application since not every application name is equivalent to the name present in Accessibility tree:
 
@@ -1102,7 +1102,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   Lets exit the `ipython3` since there is a lock in effect and `Sniff` will not/should not start when you are working with it in command line.
 
-  Once you open the `Sniff` you can see the applications opened and you can click and browse its content. For better visual presentation click on `Actions` -> `Highlight Items`. With Xorg this shows you the `'red squares'` correctly around the selected nodes, with Wayland this will be shown incorrectly. That is one of the reason why going through the tree via interactive shell is better. Once you get used to it, searching for your desired node is a matter of seconds.
+  Once you open the `Sniff` you can see the applications opened and you can click and browse its content. For better visual presentation click on `Actions` -> `Highlight Items`. With Xorg this shows you the `red squares` correctly around the selected nodes, with Wayland this will be shown incorrectly. That is one of the reason why going through the tree via interactive shell is better. Once you get used to it, searching for your desired node is a matter of seconds.
 
 ## Explaining the rest of the gnome-terminal project.
 
@@ -1128,7 +1128,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   This file is the main script that will be run in the machine and you will see it does some logic I have explained.
 
-  The mapper.yaml will be parsed and each `testmapper` item will be executed for example as `'./runtest.sh start_via_command'` but still based on mapper definition.
+  The mapper.yaml will be parsed and each `testmapper` item will be executed for example as `./runtest.sh start_via_command` but still based on mapper definition.
 
   Detailed description:
   - Set some variables for later.
@@ -1184,7 +1184,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   All this work that went into making our tool sets is very dependent on Accessibility working, everything depends on and is built around Atspi. If Accessibility went away or would be broken, we would not be able do as much as we can today. Currently we can automate most of the GNOME Applications including `gnome-shell` since from the point of view of Accessibility the `gnome-shell` is just another application.
 
-  This article aims to show how 'easy' it is to get the automation of GNOME Applications off the ground. We hope, by providing the full `'gnome-terminal'` component automation example for anyone, many people will try it out. We would love if people found it useful and would attempt to contribute to upstream projects with automation tests.
+  This article aims to show how 'easy' it is to get the automation of GNOME Applications off the ground. We hope, by providing the full `gnome-terminal` component automation example for anyone, many people will try it out. We would love if people found it useful and would attempt to contribute to upstream projects with automation tests.
 
   The most desired outcome would be more eyes on Accessibility. To provide justification and motivation for development of Accessibility and its ability to be used for automation.
 
@@ -1225,7 +1225,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   Its file strucure is our project template and all other things are going before or after the behave command line execution. Behave has limitations that we have to hack around sometimes to get our desired outcome. Those are rare althought we have a recent example.
 
-  We need to generate log no matter what part fails, so that the end user can evaluate what went wrong. The problem starts when the very first function is called, `before_all`. Something can still go wrong and we need to attach the data to the report. The problem is that behave even if it was called as `'behave -f html-pretty'`, behave "does not know" about the formatter in the `before_all` function. So when we are dealing with an error in setup we have nowhere to attach it to. We can bypass it by saving the error and evaluate any errors in the very next function `before_scenario`, end the run, and attach it to the report since behave now knows it has a formatter defined. This is workaroundable but quite inconvinient.
+  We need to generate log no matter what part fails, so that the end user can evaluate what went wrong. The problem starts when the very first function is called, `before_all`. Something can still go wrong and we need to attach the data to the report. The problem is that behave even if it was called as `behave -f html-pretty`, behave "does not know" about the formatter in the `before_all` function. So when we are dealing with an error in setup we have nowhere to attach it to. We can bypass it by saving the error and evaluate any errors in the very next function `before_scenario`, end the run, and attach it to the report since behave now knows it has a formatter defined. This is workaroundable but quite inconvinient.
 
   There are rare issues where the bahave fails and no logs are generated while we would love at least partial results, but since behave generates the output, if behave fails we have nothing to parse for our `html-pretty` output. Sometimes behave also captures errors and we have to go for an adventure to see where the error was coming from since the error we get said nothing about the real issue. There are no blockers currently, just inconveniences that we would love not to deal with.
 
