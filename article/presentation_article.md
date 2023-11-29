@@ -360,7 +360,7 @@ I have started to develop qecore only a few years back so this project is relati
 
     This is done with the qecore class `TestSandbox` this class will take care of everything. I will use example from the full example of `gnome-terminal` that I will be introducing later in this article.
 
-    The behave file `environment.py` has a few defined functions that behave has hooks for which we can fill with logic that we need. So we are going to use the `before_all` and initialize our `TestSandbox` class and save it to the variable `context` which is a data structure of behave that can be used to save and transfer data throughout all the files during the behave run. We can define our variables in `context` so we named it `context.sandbox`. From this moment the sandbox class will be available in python behave files and we can use our `sandbox`. I again ommited some parts for simplicity, the full example will have the entire structure.
+    The behave file `environment.py` has a few defined functions that behave has hooks for, which we can fill with logic that we need. So we are going to use the `before_all` and initialize our `TestSandbox` class and save it to the variable `context` which is a data structure of behave that can be used to save and transfer data throughout all the files during the behave run. We can define our variables in `context` so we named it `context.sandbox`. From this moment the sandbox class will be available in python behave files and we can use our `sandbox`. I again ommited some parts for simplicity, the full example will have the entire structure.
 
     ```python
     def before_all(context) -> None:
