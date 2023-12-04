@@ -53,7 +53,7 @@ First lets go over individual parts of our automation stack that we use.
 
 We are using Assistive Technology - Service Provider Interface (AT-SPI) which is a set of interfaces that allow access technologies such as screen readers to programmatically determine what is being displayed on the screen and simulate keyboard and mouse events. It can also be used for automated testing.
 
-To do this we are using python module GObject introspection which holds python bindings and support for gtk toolkit and GNOME applications, namely Atspi module.
+To do this we are using Python module GObject introspection which holds Python bindings and support for GTK toolkit and GNOME applications, namely Atspi module.
 
   ```python
   from gi.repository import Atspi
@@ -109,7 +109,7 @@ I will give more thorough example within the `gnome-terminal` project.
 
 While the example provided above will work for Xorg. For Wayland there is an extra step we need to do to successfuly navigate the application via correct coordinates.
 
-With Wayland there is no translation of application coordinates to the screen coordinates. Meaning that if we have the a button of the top left corner of the application and the application is in the middle of the screen. The click itself will be translated to the top left corner of the screen and not in the application itself. Therefore missing the click and failing the step.
+With Wayland there is no translation of application coordinates to the screen coordinates. Meaning that if we have a button of the top left corner of the application and the application is in the middle of the screen. The click itself will be translated to the top left corner of the screen and not into the application window. Therefore missing the click and failing the step.
 
 Fortunately we have a solution in form of a `gnome-ponytail-daemon`. This project was written by Olivier Fourdan `@ofourdan` and was based on gnome-remote-desktop written by Jonas Adahl `@jadahl`. I would also like to mention a new developer that recently joined our team José Expósito `@jexposit` who already contributed to the `gnome-ponytail-daemon` project. Most changes are communicated after which I can verify the stability with our suites.
 
@@ -119,7 +119,7 @@ To record any given window, there is a need to identify such window, which where
 
 Functions from this project that connect a window and do actions in it for automation are integrated in dogtail project to be used seemlessly without any required user setup. So in effect everything between Xorg and Wayland on our automation side is exactly the same and functions are handled differently on dogtail side.
 
-There are of course some shortcomings. In rare cases we need to test a feature that dogtail does not have a function for so user needs to manually change window connection but such cases are rare enough that examples for these cases fall out of the scope of this article.
+There are of course some shortcomings. In rare cases we need to test a feature, that dogtail does not have a function for, so user needs to manually change window connection, but such cases are rare enough that examples for these cases fall out of the scope of this article.
 
 If there would be a need for very specific test case, the dogtail and ponytail can be used in unusual ways (read: hacked around).
 With enough knowledge about the system and how these APIs work a lot of things can be done even if there are not provided as a methods and functions.
@@ -127,7 +127,7 @@ We have years of experience in this. Accessiblity is not always in the state we 
 
 I will show how to build and use ponytail in the `Full project example` section.
 
-Project repository is located here https://gitlab.gnome.org/ofourdan/gnome-ponytail-daemon
+The ponytail project repository is located here https://gitlab.gnome.org/ofourdan/gnome-ponytail-daemon
 
 ## Giving the API a structure to be used in automation - behave
 
@@ -257,9 +257,9 @@ I have mentioned separating test scenarios executed to their own result pages. T
 
 The result of the behave run you saw above is given to the console in the `pretty` format, which is a `Standard colourised pretty formatter`. Behave has quite a lot of formatters to use. These formatters are built-in and can be chosen from to get the resulted data in a lot of formats ready to be used for various purposes.
 
-Unfortunately none of them are really useful to the extent of what we need in terms of reporting the result and debugging if something goes wrong.
+Unfortunately none of them is really useful to the extent of what we need in terms of reporting the result and debugging if something goes wrong.
 
-New formatter can be added as a module to the behave. We provide the formatter as a python module available from `pypi` https://pypi.org/project/behave-html-pretty-formatter/.
+New formatter can be added as a module to the behave. We provide the formatter as a Python module available from `pypi` https://pypi.org/project/behave-html-pretty-formatter/.
 
 All that remains is to connect the module to the behave so that behave can use the new formatter. And this is done in the `behave.ini` file you saw in our project structure. Once the `behave.ini` file has the configuration of the `behave-html-pretty-formatter` it will be seen by behave and can now be used when running the behave.
 
@@ -294,7 +294,7 @@ This is the `behave.ini` file you will see in the `gnome-terminal` automation ex
 
 That run will now be executed as `$ behave -kt dummy -f html-pretty -o test.html`. This will change the formatter from the default `pretty` to the `html-pretty` that will take the data from behave, transform them and generate self contained html page to the output file `test.html`. Our test result files are named after the test case that was executed but omitted here for simplicity.
 
-We have made a new formatter `html-pretty` less than a year ago (January 2023) to improve on the old `html` formatter. The new `html-pretty` formatter is coded in very different way and can be more easily enriched with new features. It also is, in our opinion, much cleaner and simpler, while allowing us to have more data available to us. Output of this project allows us to have a self contained html page so that the test result are always in this single file with CSS and JS. The page contains a lot of information. It prints each step and provides data if something goes wrong.
+We have made a new formatter `html-pretty` less than a year ago (January 2023) to improve the old `html` formatter. The new `html-pretty` formatter is coded in a very different way and can be more easily enriched with new features. It also is, in our opinion, much cleaner and simpler, while allowing us to have more data available to us. Output of this project allows us to have a self contained html page so that the test result are always in this single file with CSS and JS. The page contains a lot of information. It prints each step and provides data if something goes wrong.
 
 Although the formatter supports quite a lot of use cases like compression of data, clickable links, images, videos and text logs - the data has to be somehow generated and injected into the formatter. The `how` is going to be addressed in the next section.
 
@@ -318,16 +318,16 @@ I have started to develop qecore only a few years back so this project is relati
 
     Lets start with another part of our automation stack which cannot be left out and is key to every single test (or at least most of them). While we have everything needed, there are situations where the session or application will freeze or otherwise will become unusable. We would like to do everything in one session but from our experiences, this is in most cases not ideal or straight up not viable.
 
-    So we need to restart the session on command and start a new one in a moments notice, while not interupting the test suite run. This is provided by `qecore` in form of a script `qecore-headless`. The naming of the script is purely historical. it comes from the times we were running our suites on headless systems with dummy drivers. Currently it serves as our session configuration tool. We run every single test in new session, meaning that the test starts, the new GDM session is started, the test will execute, report result and GDM session will be stopped. That way the next test will start with new session and no cleanup is required (although if qecore is setup correctly it will do the cleanup in the session and enable multiple runs in single session).
+    So we need to restart the session on command and start a new one in a moments notice, while not interrupting the test suite run. This is provided by `qecore` in form of a script `qecore-headless`. The naming of the script is purely historical. it comes from the times we were running our suites on headless systems with dummy drivers. Currently it serves as our session configuration tool. We run every single test in new session, meaning that the test starts, the new GDM session is started, the test will execute, report result and GDM session will be stopped. That way the next test will start with new session and no cleanup is required (although if qecore is setup correctly it will do the cleanup in the session and enable multiple runs in single session).
 
     The `qecore-headless` script provides much more than that though.
     - Enables accessibility toolkit.
     - It changes GDM custom.conf configuration to autologin test user without password so that the GDM login page is not in the way.
-    - It takes care of environment variables that are required for the system and for our suites which will be used by every python behave run.
+    - It takes care of environment variables that are required for the system and for our suites which will be used by every Python behave run.
     - It configures user session in sense that you can choose if you would like to start Xorg `qecore-headless --session-type xorg` or Wayland `qecore-headless --session-type wayland`.
     - It is able to configure user desktop, namely GNOME `qecore-headless --session-desktop gnome` and GNOME Classic `qecore-headless --session-desktop gnome-classic`.
     - It makes sure the restart is done cleanly by checking logind.
-    - It sets up other configuration to allow use figure out system issues, like issue of accessibility turning off.
+    - It sets up other configuration to allow you to figure out system issues, like issue of accessibility turning off.
     - It will adapt gsettings values which we use most of the time and can sometime be annoying to deal with by hand.
     - It does extensive troubleshooting when the GDM start fails. (TODO LINK IMAGE HERE - pending final article location)
     - It can enforce session type, meaning it will check the system configuration and running session and will fail on missmatch.
@@ -360,7 +360,7 @@ I have started to develop qecore only a few years back so this project is relati
 
     This is done with the qecore class `TestSandbox` this class will take care of everything. I will use example from the full example of `gnome-terminal` that I will be introducing later in this article.
 
-    The behave file `environment.py` has a few defined functions that behave has hooks for, which we can fill with logic that we need. So we are going to use the `before_all` and initialize our `TestSandbox` class and save it to the variable `context` which is a data structure of behave that can be used to save and transfer data throughout all the files during the behave run. We can define our variables in `context` so we named it `context.sandbox`. From this moment the sandbox class will be available in python behave files and we can use our `sandbox`. I again ommited some parts for simplicity, the full example will have the entire structure.
+    The behave file `environment.py` has a few defined functions that behave has hooks for, which we can fill with logic that we need. So we are going to use the `before_all` and initialize our `TestSandbox` class and save it to the variable `context` which is a data structure of behave that can be used to save and transfer data throughout all the files during the behave run. We can define our variables in `context` so we named it `context.sandbox`. From this moment the sandbox class will be available in Python behave files and we can use our `sandbox`. I again ommited some parts for simplicity, the full example will have the entire structure.
 
     ```python
     def before_all(context) -> None:
@@ -378,7 +378,7 @@ I have started to develop qecore only a few years back so this project is relati
       - enable backtrace generation from coredumps with debuginfo and debugsource installation (this takes a lot of time and space so default behaviour is skip backtrace fetching)
       - enable other G_DEBUG options.
     - Some initial debugging and checks.
-    - Incialization of default suite run.
+    - Initialization of default suite run.
     - Retrieve system data like architecture, distribution, display, session desktop and type. We need to differentiate sometimes based on these so the `context.sandbox` will provide all the data for the suite.
     - The parameters of the class are a name of the test suite and the context, which is required to get the data from context to `TestSandbox` where we can manipulate it.
 
@@ -418,7 +418,7 @@ I have started to develop qecore only a few years back so this project is relati
 
     From the example you can see that the `gnome-terminal` application was saved to the `context.terminal` variable. The method called was executed on `context.sandbox` which is `get_application`. This is required so that `sandbox` can keep the track of all applications defined so that it can do a proper cleanup after the suite ends.
 
-    You can also see the parameters. All of them have their usage to properly identify the desktop file and its presence in Atspi tree. There are some minor debug prints on wrong usage to help new users identify issues. For example when you would not define the `desktop_file_name` for `gnome-terminal` you would get following output prompting the user to specify the `.desktop` file since from the data provided we were not able to decide what the user wanted to use.
+    You can also see the parameters. All of them have their usage to properly identify the desktop file and its presence in Atspi tree. There are some minor debug prints on wrong usage to help new users to identify issues. For example when you would not define the `desktop_file_name` for `gnome-terminal` you would get following output prompting the user to specify the `.desktop` file since from the data provided we were not able to decide what the user wanted to use.
 
     ```console
     Environment error: before_all: More than one .desktop file found:
@@ -438,7 +438,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   - ### Before Scenario.
 
-    Now for the behave's `before_scenario` function that gets executed before very test. This is where most of the work will be done by qecore's `sandbox`. But all the user needs to do is to call this method and that is all. Nothing more, nothing less.
+    Now for the behave's `before_scenario` function that gets executed before each test. This is where most of the work will be done by qecore's `sandbox`. But all the user needs to do is to call this method and that is all. Nothing more, nothing less.
 
 
     ```python
@@ -450,20 +450,20 @@ I have started to develop qecore only a few years back so this project is relati
 
     ```
 
-    To list some things that the `before_scenario` does.
-      - Waiting until `gnome-shell` becomes responsive, there is no point to continue until `gnome-shell` can be found in Atspi tree.
+    To list of some things that the `before_scenario` does:
+      - Waiting until `gnome-shell` becomes responsive, there is no point to continue until `gnome-shell` can be found in the Atspi tree.
       - Also sets some attributes that can be used to manipulate the run.
-      - Set timers for current scenarios.
+      - Sets timers for current scenarios.
       - Closes welcome tour - we need to have empty session so we can test.
       - Closes yelp.
       - Closes initial setup.
-      - Set blank screen to never - we need test cases that are also idle for long period of time, do not lock the session.
+      - Sets blank screen to never - we need even test cases that are idle for a long period of time not to lock the session.
       - Sets up embedding for `behave-html-pretty-formatter` - attaching data to the html logs.
       - Makes preparations for asynchronous calls like timeout from the host machine.
       - Creates new keyring so that we are not bothered by polkit dialogs during the suite run.
       - Returning to the home workspace.
       - Starts the recording - this is priceless when debugging or reporting bugs. Video of the bug reproducer ready to go.
-      - There are more things but many of them are not important in the context of this article.
+      - There are more things, but many of them are not important in the context of this article.
 
   - ### After Scenario.
 
@@ -477,7 +477,7 @@ I have started to develop qecore only a few years back so this project is relati
           context.sandbox.after_scenario(context, scenario)
       ```
 
-    To again list some things that are being done.
+    Again, to list some things that are being done:
       - Capturing the image on fail.
       - Stopping the video recording.
       - Cleanup, closing all started applications.
@@ -498,14 +498,14 @@ I have started to develop qecore only a few years back so this project is relati
     - `context.sandbox.before_scenario(context, scenario)`
     - `context.sandbox.after_scenario(context, scenario)`
 
-    Now your setup is done "forever". These are the setup parts and once this is done for a project, it rarely changes. Setup for some of my components I am responsible for did not change for years I was working on them. There are situations in my suites where I have no defined application so all I need for setup are just 3 lines.
+    Now your setup is done "forever". These are the setup parts and once this is done for a project, it rarely changes. Setup for some of my components, I am responsible for, did not change for years I was working on them. There are situations in my suites where I have no defined application, so all I need for setup are just 3 lines.
 
 
   - ### Commonly used steps.
 
-    In previous examples from `behave` usage you saw that you can implement function in python. Connect it with `behave` decorator `@step` to the text in `.feature` file.
+    In previous examples from `behave` usage, you saw that you can implement a function in python. Connect it with `behave` decorator `@step` to the text in `.feature` file.
 
-    Over the years we have had many different step implementation and usage from features. Most of the time if I wanted to do something I had to code python function mark it with decorator and use that decorator in feature. Some of them were used in so many project I found myself recoding or copying the same step over and over. So I decided to provide them to everyone and all they have to do is to keep the format so that the behave can match them.
+    Over the years we have had many different step implementations and usage from features. Most of the time if I wanted to do something I had to code a Python function, mark it with decorator and use that decorator in feature. Some of them were used in so many projects, I found myself recoding or copying the same step over and over. So I decided to provide them to everyone and all they have to do is to keep the format so that the behave can match them.
 
     This is the file where you can see commonly used steps https://gitlab.com/dogtail/qecore/-/blob/master/qecore/common_steps.py
 
@@ -532,7 +532,7 @@ I have started to develop qecore only a few years back so this project is relati
       * Terminal contains string "test string"
     ```
 
-    Apart from providing generic steps that are usable in every project. This was also thought about as having a way for non-technical person to write English sentences and being able to write automated tests. It is not perfect and cannot be used for all cases generally as there are situation where I just have to write a custom step, but even an unexperienced user should be able to write very simple test without extensive python knowledge or even the project as a whole.
+    Apart from providing generic steps that are usable in every project. This was also thought about as having a way for non-technical person to write English sentences and being able to write automated tests. It is not perfect and cannot be used for all cases generally as there are situation where I just have to write a custom step, but even an inexperienced user should be able to write a very simple test without extensive Python knowledge or even the project as a whole.
 
     ### Common steps also come with the advantage of debugging on error.
 
@@ -578,30 +578,30 @@ I have started to develop qecore only a few years back so this project is relati
 
     - **Flatpaks** - just as we are able to load applications with `get_application` we also have a function to work with Flatpaks `get_flatpak`.
     - **Backtrace** - once there is an issue with the core component we are testing and coredump is detected via `coredumpctl`, qecore will attempt to get backtrace from `gdb` after installing all available debuginfo and debugsource packages that the `gdb` will say it needs. This needs to be toggled on as it takes quite a lot of time and space. You will see the resulting backtrace attached in example report. **backtrace_from_coredump_zenity_example.html**.
-    - **Logging** - we have a continuous logging of qecore and what it does. Once any test fails that logging data is attached to the html report to make sure qecore did not cause the mistake. We also can make sure the qecore is working as intended at all times. This logging can also be directed to the console so user will be able to see it in real time. You can try it in the provided project with `$ LOGGING=true behave -kt start_via_command`
-    - **Image matching** - from time to time there is a use case where the accessibility is not working correctly or the accessibility data is not there at all. For these situations we cannot do much, but we took an inspiration from OpenQA. In such cases we can identify widget and parts of the desktop simply with an image (`needle`) and try to find that image in the screenshot we take. These functions will return coordinates to us and we can click to the correct place. The qecore has an image matching section that can be imported and used. It also provides precoded steps that are used in majority of the times. For the times you need to adjust the execution, we provide the `Matcher` class and its methods so that you can build your custom functionality easily. For exact implementation and usage you can look here https://gitlab.com/dogtail/qecore/-/blob/master/qecore/image_matching.py
+    - **Logging** - we have a continuous logging of qecore and what it does. Once any test fails, its logging data is attached to the html report to make sure qecore did not cause the mistake. We also can make sure the qecore is working as intended at all times. This logging can also be directed to the console, so user will be able to see it in real time. You can try it in the provided project with `$ LOGGING=true behave -kt start_via_command`
+    - **Image matching** - from time to time there is a use case where the accessibility is not working correctly or the accessibility data is not there at all. For these situations we cannot do much, but we took an inspiration from OpenQA. In such cases we can identify widget and parts of the desktop simply with an image (`needle`) and try to find that image in the screenshot we take. These functions will return coordinates to us and we can click to the correct place. The qecore has an image matching section that can be imported and used. It also provides precoded steps that are used in majority of the times. For the times you need to adjust the execution, we provide the `Matcher` class and its methods, so that you can build your custom functionality easily. For exact implementation and usage you can look here https://gitlab.com/dogtail/qecore/-/blob/master/qecore/image_matching.py
 
   - ### Summary for the qecore and why we need it.
 
-    While all of this text seems like a lot. From the user point of view there is not much going on. All the user needs is.
+    While all of this text seems like a lot, from the user point of view there is not much going on. All the user needs is:
       - Install qecore (see the installation bellow).
       - Make very simple setup once (see the `environment.py` file).
 
-    From this point the users are provided with a lot of functions and methods that they do not have to code themselfs.
+    From this point the users are provided with a lot of functions and methods that they do not have to code themselves.
       - Provides functionality to restart session on all of our supported systems and architectures.
-      - Populates our test result output logs with data like `Error Messages` `Screenshots` `Videos` `Journal` `Backtraces` `Links` and `Logging`
+      - Populates our test result output logs with data like `Error Messages` `Screenshots` `Videos` `Journal` `Backtraces` `Links` and `Logging`.
       - Provides a lot of simple steps that are ready to be used with built-in debugging on error.
-      - Provides way to write automate tests with image matching.
+      - Provides a way to write automated tests with image matching.
 
 # Full project example.
 
-  Now that I have covered everything our automation solution needs lets get to the setup and execution of the GNOME Terminal test suite on Fedora 38 with Wayland.
+  Now that I have covered everything our automation solution needs, lets get to the setup and execution of the GNOME Terminal test suite on Fedora 38 with Wayland.
 
 ## Basic machine setup required before any action.
 
   There are a few preparation steps our solution requires.
 
-  Since we have test suites that can be destructive to the system and/or change the system configuration, we do not start the automation on our local machines. We have a local Virtual Machines with given distributions ready and we connect to them via ssh. If anything goes wrong during development of the suite, we would break only the VM which can be fixed or snapshotted back and in case of a unrecoverable issue, we will still be fine since the VM's only purpose was running the suites and setting up a new one is trivial.
+  Since we have test suites that can be destructive to the system and/or change the system configuration, we do not start the automation on our local machines. We have a local Virtual Machines with given distributions ready and we connect to them via ssh. If anything goes wrong during development of the suite, we would break only the VM which can be fixed or snapshotted back and in case of an unrecoverable issue, we will still be fine since the VM's only purpose was running the suites and setting up a new one is trivial.
 
   This setup is generally handled by our CI, which is why when trying this you will have to do this setup once by hand.
 
@@ -628,8 +628,7 @@ I have started to develop qecore only a few years back so this project is relati
   Most likely the `sshd` service will not being enabled which would produce `Connection refused` for the port 22 so you might need to start the `sshd` in the VM and enable so it will be started in the future as well.
 
   ```sh
-  systemctl start sshd
-  systemctl enable sshd
+  systemctl enable --now sshd
   ```
 
   Now you should have everything set on the VM side. Lets `ssh` into it.
@@ -859,7 +858,7 @@ I have started to develop qecore only a few years back so this project is relati
 
     In the meantime, you will need a knowledge how to go through the Accessibility tree by hand and check different Atspi nodes attributes to improve your queries.
 
-    Lets use an interactive python shell - ipython3.
+    Lets use an interactive Python shell - ipython3.
 
     ```sh
     sudo python3 -m pip install ipython # Install ipython3.
@@ -1150,23 +1149,23 @@ I have started to develop qecore only a few years back so this project is relati
 
 # Comparison of OpenQA vs Accessibility
 
-  While OpenQA is a good product for what it does. It is in my opinion not usable for GNOME Desktop Automation, and not in sense that it cannot be used, it can very well be used with some degree of difficulty. I have seen it being used testing anaconda and that is perfect usecase. It would be my choice as well for parts of the system where Atspi cannot be used.
+  While OpenQA is a good product for what it does. It is in my opinion not usable for GNOME Desktop Automation, and not in sense that it cannot be used, it can very well be used with some degree of difficulty. I have seen it being used testing anaconda and that is a perfect usecase. It would be my choice as well for parts of the system where Atspi cannot be used.
 
   As I mentioned, we are using the image matching in some capacity as well. From my experiences the image matching is very fragile, the tests are difficult to maintain and it is quite unscalable for our purposes. The few tests that I have written were a pain and I am the one who introduced this feature to our team, so I can imagine others were even more frustrated with it. We have it in a good enough state today but on any UI change we have to redo the needles. There were instances where I could not differentiate between new and old needle, to my eye it looked exactly the same but the new needle started passing the test. It is quite a long process to write even a single test.
 
-  On the other hand with Atspi, if we see a failed test, most of the times it is a bug or the UI label or placement has changed. On bugs the issue is clear and there is nothing to be changed on automation side. On UI change we check Screenshot or Video to see what happened and usually we can fixed the test very quickly by changing order of clicks or rewritting a string. Once the suite is written, it can be easily expanded with new test cases and maintained through different version releases. There are some issues we encounter when writting the tests that cause instability and has to be accounted for but once the suite is tried and tested it is very stable.
+  On the other hand with Atspi, if we see a failed test, most of the times it is a bug or the UI label or placement has changed. On bugs the issue is clear and there is nothing to be changed on automation side. On UI change we check Screenshot or Video to see what happened and usually we can fix the test very quickly by changing order of clicks or rewriting a string. Once the suite is written, it can be easily expanded with new test cases and maintained through different version releases. There are some issues we encounter when writing the tests that cause instability and has to be accounted for but once the suite is tried and tested it is very stable.
 
-  For me personally there is no comparison of the two but there is no question about difficulty of comparison between two images and working with python objects. Working with objects will always be more stable.
+  For me personally there is no comparison of the two but there is no question about difficulty of comparison between two images and working with Python objects. Working with objects will always be more stable.
 
 # Usage with GTK4
 
-  While what I have described here will work for GTK4 Applications you will soon find that there are extra steps required.
+  While what I have described here will work for GTK4 Applications, you will soon find that there are extra steps required.
 
-  There is a question of `shadows`. GTK4 applications have large shadows and that shadow left upper corner is the base (0, 0) of the application. So when you attempt to click the click will be very much in the wrong place.
+  There is a question of `shadows`. GTK4 applications have large shadows and that shadow left upper corner is the base (0, 0) of the application. So when you attempt to click, the click will be very much in the wrong place.
 
   To fix this you can use the `update_coords()` method from `dogtail.rawinput` to offset (x, y) of the final coordinate.
 
-  I still hope I will be able to remove this method in the future and figure out the size of the `shadows` dynamically based on the application so that the user is not forced to make manually offset for all clicks, although my recent experimenting and reasearch is proving me worng.
+  I still hope I will be able to remove this method in the future and figure out the size of the `shadows` dynamically based on the application, so that the user is not forced to make manually offset for all clicks, although my recent experimenting and research is proving me wrong.
 
   This offset, while working with GTK4, will now cause the GTK3 applications actions to be in the wrong place and there is no reason for a suite to not use both.
 
@@ -1182,7 +1181,7 @@ I have started to develop qecore only a few years back so this project is relati
 
   While I want to present our solution and I can say that what we have is good, it is not perfect by a long shot and requires a lot of knowledge to get the automation running as I have demonstrated in this article, it can also quite quickly stop working.
 
-  All this work that went into making our tool sets is very dependent on Accessibility working, everything depends on and is built around Atspi. If Accessibility went away or would be broken, we would not be able do as much as we can today. Currently we can automate most of the GNOME Applications including `gnome-shell` since from the point of view of Accessibility the `gnome-shell` is just another application.
+  All this work that went into making our tool sets is very dependent on Accessibility working, everything depends on and is built around Atspi. If Accessibility went away or would be broken, we would not be able to do as much as we can today. Currently we can automate most of the GNOME Applications including `gnome-shell` since from the point of view of Accessibility, the `gnome-shell` is just another application.
 
   This article aims to show how 'easy' it is to get the automation of GNOME Applications off the ground. We hope, by providing the full `gnome-terminal` component automation example for anyone, many people will try it out. We would love if people found it useful and would attempt to contribute to upstream projects with automation tests.
 
@@ -1211,23 +1210,23 @@ I have started to develop qecore only a few years back so this project is relati
 
   There are some issues that come from Atspi already, we are able to identify them on our end and can notify developers but there is an issue. If developer wants to see it reproduced they would need quite a lot of setup and even if the setup is running they see dogtail/qecore errors, we currently have no easy way how to provide reproducers in Atspi that would allow them to see the issue and not waste their time with our environment. The constraint here is time.
 
-  We have a few issues that we could report and help developers identify and help fix it. But the problem is that developers have already lot of stuff on their hands, our issues are not a priority, understandably. We also do not really have time to make difficult reproducers and debugging issues that we can bypass. We have quite a lot of responsibilities and there is only a finite time. The time we would spend on making reproducers is quite higher that time we spend on making a workaround.
+  We have a few issues that we could report and help developers identify and help fix it. But the problem is that developers have already lot of stuff on their hands, our issues are not a priority, understandably. We also do not really have time to make difficult reproducers and debugging issues that we can bypass. We have quite a lot of responsibilities and there is only a finite time. The time we would spend on making reproducers is quite higher that the time we spend on making a workaround.
   Workarounds are doable in matter of minutes and we bypass the issue altogether.
 
   So unless there is a blocker, we usually opt to not report issues and work around them.
 
   `Aspirations`:
-  If we introduce automation via accessibility to more people with coherent project like GNOMEAutomation, that is not collection of projects spliced together to just work, we might have a wider audience and user base which might help to atract talent to our teams that would help improve Accessibility and keeping it in usable state.
+  If we introduce automation via accessibility to more people with a coherent project like GNOMEAutomation, that is not collection of projects spliced together to just work, we might have a wider audience and user base which might help to attract talent to our teams that would help improve Accessibility and keeping it in usable state.
 
-  With project like this we also might have a wider base for Fedora testing days. Some things already work on Fedora and is mostly usable. The issue is long setup as you could see, which this project would hopefully solve. I would imagine that once test day comes we could have gitlab/hub page with our testing suites that I and others would contribute to so that anyone can just come, download the project and run the tests. This would be quite rich source of data that user would not have to spend a lot of time on. Simply boot VM and run the suits, report results. There is of course a need for real HW testing but that is not the issue we are trying to solve here. Currently I try to participate in test days but I am not able to fit it to my schedule every time, which is a shame.
+  With a project like this we also might have a wider base for Fedora testing days. Some things already work on Fedora and is mostly usable. The issue is a long setup as you could see, which this project would hopefully solve. I would imagine that once a test day comes, we could have gitlab/hub page with our testing suites that I and others would contribute to, so that anyone can just come, download the project and run the tests. This would be quite rich source of data that user would not have to spend a lot of time on. Simply boot VM, run the suits, report results. There is of course a need for real HW testing as well, but that is not the issue we are trying to solve here. Currently I try to participate in test days, but I am not able to fit it to my schedule every time, which is a shame.
 
 ## The behave
 
-  Its file strucure is our project template and all other things are going before or after the behave command line execution. Behave has limitations that we have to hack around sometimes to get our desired outcome. Those are rare althought we have a recent example.
+  Its file structure is the template of our project and all other things are going before or after the behave command line execution. Behave has limitations that we have to hack around sometimes to get our desired outcome. Those are rare although we have a recent example.
 
-  We need to generate log no matter what part fails, so that the end user can evaluate what went wrong. The problem starts when the very first function is called, `before_all`. Something can still go wrong and we need to attach the data to the report. The problem is that behave even if it was called as `behave -f html-pretty`, behave "does not know" about the formatter in the `before_all` function. So when we are dealing with an error in setup we have nowhere to attach it to. We can bypass it by saving the error and evaluate any errors in the very next function `before_scenario`, end the run, and attach it to the report since behave now knows it has a formatter defined. This is workaroundable but quite inconvinient.
+  We need to generate a log no matter what part fails, so that the end user can evaluate what went wrong. The problem starts when the very first function is called, `before_all`. Something can still go wrong and we need to attach the data to the report. The problem is that behave, even if it was called as `behave -f html-pretty`, "does not know" about the formatter in the `before_all` function. So when we are dealing with an error in setup, we have no place to attach it to. We can bypass it by saving the error and evaluate any errors in the very next function `before_scenario`, end the run, and attach it to the report since behave now knows it has a formatter defined. This is workaroundable but quite inconvenient.
 
-  There are rare issues where the bahave fails and no logs are generated while we would love at least partial results, but since behave generates the output, if behave fails we have nothing to parse for our `html-pretty` output. Sometimes behave also captures errors and we have to go for an adventure to see where the error was coming from since the error we get said nothing about the real issue. There are no blockers currently, just inconveniences that we would love not to deal with.
+  There are rare issues where the bahave fails and no logs are generated while we would love at least partial results. But since behave is the one who generates the output, if behave fails we have nothing to parse for our `html-pretty` output. Sometimes behave also captures errors and we have to go for an adventure to see where the error was coming from since the error we get said nothing about the real issue. There are no blockers currently, just inconveniences that we would love not to deal with.
 
   `Aspiration` is to not have behave dictate our structure, possibilities and output but having project that enables our wants/needs/requirements. But again, behave works perfectly fine in majority of our cases - no reason to reimplement something that exists with small changes. There is currently no proper reason to remove behave from our solution.
 
@@ -1240,18 +1239,18 @@ I have started to develop qecore only a few years back so this project is relati
   I am going to include personal experience when I first started working at Red Hat.
   I was assigned a responsibility of a project `gnome-contacts`. The automation was already written and I was required to understand the code, learn how to use it, modify it and improve it. At first I was just copying around what was already there and I had no issues making it work. Until I encountered a strange artifact, function not working. It was the same as any other used in the code. I had no idea why it was not working. I found dogtail source code and went though it and I saw nothing wrong. No one was able to help me as they did not see anything wrong on the `dogtail` side either. So I marked the test as broken or simply worked around it, I do not remember. It was quite a while before I realized the dogtail is not a full API but a wrapper and extension of others. So I started looking for the other libraries imported in `dogtail`, in `pyatspi2` and finally `Atspi`. I found a documentation that I do not believe was up to date but it was usable. I found the C source code. I went through it to verify missing documentation parts. I still do not know the exact source code and documentation, I might have been looking at the wrong place altogether. Most of the stuff I tried that I know are or are not working, is a result of experimentations. As I mentioned there is not much time so trial and error was the chosen solution. I started making reproducer in `Atspi`, only to find I am able to reproduce the issue I had in the past quite a lot and always thought the `dogtail` was not working.
 
-  The point is that the issue that was in the code for years was not identified because no one knew where to look. I had no one to teach me where to look or to say that the problem might be somewhere else because it was poorly documented and I did not find any tutorials how to debug such issues.
+  The point is that the issue that was in the code for years was not identified because no one knew where to look. I had no one to teach me where to look or to say that the problem might be somewhere else, because it was poorly documented and I did not find any tutorials how to debug such issues.
 
   `Aspirations` is to improve `dogtail`, but not in that project - an alternative to dogtail. Dogtail is implementing its own functions, it wraps over `pyatpsi2` and `Atspi`, while `pyatspi2` also wraps over `Atspi`, so debugging is a problem.
 
-  To make sure problems are in `Atspi` library I had no other option than to make lightweight clone of `dogtail` and do no wrapping over anything other than `Atspi`. I did the bare minimum to make the API work and to verify some specific issue was having a source in Atspi. It was a success. I was seeing the same issue without any use of `dogtail` and `pyatspi2`.
+  To make sure problems are in the `Atspi` library, I had no other option than to make lightweight clone of `dogtail` and do no wrapping over anything other than `Atspi`. I did the bare minimum to make the API work and to verify some specific issue was having a source in Atspi. It was a success. I was seeing the same issue without any use of `dogtail` and `pyatspi2`.
 
-  The `GNOMEAutomation` would provide API just like `dogtail` but wrapping only over `Atspi` so any issue that is found will have a single source. The best case scenario would be pointing developers to the API and have them see that we are using the `Atspi` functions so it cannot be an issue we introduced. They will also get a reproducer directly to the `Atspi` and will not have to deal with our environment. In the worst case, installing `GNOMEAutomation` with given project it was reproduced in which would be startable right away without any difficult setup. Documentation will be present from the start (I have a habit to have docstring and proper documentations everywhere) so no one will be needed to go on long searches to figure out what is wrong and where.
+  The `GNOMEAutomation` would provide API just like `dogtail`, but wrapping only over `Atspi` so any issue that is found will have a single source. The best case scenario would be pointing developers to the API and have them see that we are using the `Atspi` functions, so it cannot be an issue we introduced. They will also get a reproducer directly to the `Atspi` and will not have to deal with our environment. In the worst case, installing `GNOMEAutomation` with a given project it was reproduced in, which would be startable right away without any difficult setup. Documentation will be present from the start (I have a habit to have docstring and proper documentations everywhere) so no one will be needed to go on long searches to figure out what is wrong and where.
 
 ## The gnome-ponytail-daemon
 
   I would imagine there is a way how to include it in this project so any issue can be tracked accordingly.
-  This project was originally created to enable us to continue working on Wayland. It's hard to imagine anyone but us using `gnome-ponytail-daemon` but I could be proven wrong.
+  This project was originally created to enable us to continue working on Wayland. Its hard to imagine anyone but us using `gnome-ponytail-daemon` but I could be proven wrong.
 
 ## The behave-html-pretty-formatter
 
@@ -1265,11 +1264,11 @@ I have started to develop qecore only a few years back so this project is relati
 
   Hopefully information contained was useful to you.
 
-  We would love to know how many people will actually attempt to execute GNOME Terminal test suite.
+  We would love to know, how many people will actually attempt to execute GNOME Terminal test suite.
 
-  If you will follow the setup here and succeed. Please consider `Staring` the project on github. It will help us in two ways. One is to see how many people got this far and second is making this project more visible.
+  If you will follow the setup here and succeed, please consider `Staring` the project on github. It will help us in two ways. One is to see how many people got this far and second is making this project more visible.
 
-  If you would fail for any reason. Please open an Issue on the github so that I can fix something I might have missed or to help you fix something I did not thought about.
+  If you would fail for any reason, please open an Issue on the github so that I can fix something I might have missed or to help you fix something I did not thought about.
 
   Thank you for reading.
 
