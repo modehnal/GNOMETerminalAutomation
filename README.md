@@ -1,3 +1,1 @@
-# GNOMETerminalAutomation
-Automation code for component gnome-terminal.
-
+# GNOME Terminal automation on Fedora 38 with Wayland.
