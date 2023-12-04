@@ -1251,7 +1251,7 @@ I have started to develop qecore only a few years back so this project is relati
 ## The gnome-ponytail-daemon
 
   I would imagine there is a way how to include it in this project so any issue can be tracked accordingly.
-  This project was originally created to enable us to continue working on Wayland. Its hard to imagine anyone but us using `gnome-ponytail-daemon` but I could be proven wrong.
+  This project was originally created to enable us to continue working on Wayland. It's hard to imagine anyone but us using `gnome-ponytail-daemon` but I could be proven wrong.
 
 ## The behave-html-pretty-formatter
 
