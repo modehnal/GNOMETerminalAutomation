@@ -1,0 +1,25 @@
+{
+  "[python]": {
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": false,
+    },
+    "editor.defaultFormatter": "ms-python.black-formatter",
+  },
+  "editor.rulers": [
+    88,
+    120
+  ],
+  "workbench.colorCustomizations": {
+    "editorRuler.foreground": "#000000"
+  },
+  "autoDocstring.docstringFormat": "sphinx",
+  "autoDocstring.startOnNewLine": true,
+  /* Disable specific pylance errors that are covered by linters. */
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportUnusedImport": "warning",
+    "reportMissingImports": "none",
+    "reportGeneralTypeIssues": "information",
+    "reportWildcardImportFromLibrary": "none",
+  },
+}
