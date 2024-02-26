@@ -31,18 +31,13 @@
 
 # Examples - TESTING LINKS - TO BE REMOVED
 
+  - Video prepared, side by side of session with command line: <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/gnome_terminal_test_example.webm">GNOME Terminal Test Example</a>
 
-  - Video prepared, side by side of session with command line:
-  - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data_folder/gnome_terminal_test_example.webm">GNOME Terminal Test Example</a>
+  - Backtrace from coredump example: <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/backtrace_from_coredump_zenity_example.html">Backtrace from coredump Zenity Example</a>
 
-  - Backtrace from coredump example:
-  - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data_folder/backtrace_from_coredump_zenity_example.html">Backtrace from coredump Zenity Example</a>
+  - Full html report page: <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/full_report_example.html">Full Report Example</a>
 
-  - Full html report page:
-  - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data_folder/full_report_example.html">Full Report Example</a>
-
-  - Headless troubleshooting on start up issues:
-  - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data_folder/headless_colour_troubleshooting.png">The qecore-headless troubleshooting</a>
+  - Headless troubleshooting on start up issues: <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/headless_colour_troubleshooting.png">The qecore-headless troubleshooting</a>
 
 
 # Introduction
