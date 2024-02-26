@@ -1,4 +1,4 @@
-<h1>TEST</h1>
+<h1>GNOME Terminal automation on Fedora 38 with Wayland</h1>
 
 ## Table of contents <!-- omit from toc -->
 - [Introduction](#introduction)
