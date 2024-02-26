@@ -1,2 +1,5 @@
 theme: jekyll-theme-Cayman
-description: Automation through Accessibility.
+
+# Setup
+title: Automation through Accessibility
+description: GNOME Terminal automation on Fedora 38 with Wayland
