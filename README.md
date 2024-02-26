@@ -1,7 +1,6 @@
 # GNOME Terminal automation on Fedora 38 with Wayland <!-- omit from toc -->
 
 # Table of contents <!-- omit from toc -->
-- [Examples - TESTING LINKS - TO BE REMOVED](#examples---testing-links---to-be-removed)
 - [Introduction](#introduction)
 - [Automation stack for GNOME Applications](#automation-stack-for-gnome-applications)
   - [What do we use? Automation API - dogtail](#what-do-we-use-automation-api---dogtail)
@@ -30,16 +29,6 @@
 - [Finally](#finally)
 - [Keywords](#keywords)
 - [Sources](#sources)
-
-# Examples - TESTING LINKS - TO BE REMOVED
-
-  - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/gnome_terminal_test_example.webm">Video prepared, side by side of session with command line</a>
-
-  - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/backtrace_from_coredump_zenity_example.html">Backtrace from coredump Example</a>
-
-  - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/full_report_example.html">Full HTML Report Example</a>
-
-  - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/headless_colour_troubleshooting.png">The qecore-headless troubleshooting</a>
 
 
 # Introduction
@@ -1150,11 +1139,11 @@ I have started to develop qecore only a few years back, so this project is relat
 
 # Examples
 
-  TODO pending review and final selection of article location:
-  - Video prepared, side by side of session with command line: ../data_folder/gnome_terminal_test_example.webm
-  - Backtrace from coredump example: ../data_folder/backtrace_from_coredump_zenity_example.html
-  - Full html report page: ../data_folder/full_report_example.html
-  - Headless troubleshooting on start up issues: ../data_folder/headless_colour_troubleshooting.png
+  - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/gnome_terminal_test_example.webm">Video prepared, side by side of session with command line</a>
+  - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/backtrace_from_coredump_zenity_example.html">Backtrace from coredump Example</a>
+  - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/full_report_example.html">Full HTML Report Example</a>
+  - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/headless_colour_troubleshooting.png">The qecore-headless troubleshooting</a>
+
 
 # Comparison of OpenQA vs Accessibility
 
