@@ -1,7 +1,4 @@
-# Title: GNOME Terminal automation on Fedora 38 with Wayland.
-
 # Table of contents
-- [Title: GNOME Terminal automation on Fedora 38 with Wayland.](#title-gnome-terminal-automation-on-fedora-38-with-wayland)
 - [Table of contents](#table-of-contents)
 - [Introduction](#introduction)
 - [Automation stack for GNOME Applications](#automation-stack-for-gnome-applications)
