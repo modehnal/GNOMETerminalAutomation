@@ -9,8 +9,6 @@ import traceback
 from qecore.sandbox import TestSandbox
 from qecore.utility import run
 
-# from qecore.utility import run, QE_DEVELOPMENT
-
 
 def before_all(context) -> None:
     """
