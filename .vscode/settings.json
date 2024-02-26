@@ -1,11 +1,13 @@
 {
   "[python]": {
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll": "never"
+      /* The 'true' was changed to 'explicit' by VS Code from 1.85 version.*/
+      "source.fixAll": "explicit"
     },
     "editor.defaultFormatter": "ms-python.black-formatter",
   },
+  "editor.stickyScroll.enabled": true,
   "editor.rulers": [
     88,
     120
@@ -22,4 +24,50 @@
     "reportGeneralTypeIssues": "information",
     "reportWildcardImportFromLibrary": "none",
   },
+  "cSpell.words": [
+    "abrt",
+    "Adwaita",
+    "Atspi",
+    "autoretry",
+    "ccpp",
+    "coredump",
+    "coredumpctl",
+    "coredumps",
+    "dbus",
+    "dconf",
+    "debuginfo",
+    "debuginfos",
+    "dogtail",
+    "flathub",
+    "flatpak",
+    "flatpaks",
+    "Flickr",
+    "gedit",
+    "getframe",
+    "gsettings",
+    "journalctl",
+    "keyrings",
+    "levelname",
+    "Nextcloud",
+    "nmci",
+    "opencv",
+    "pgrep",
+    "pids",
+    "qecore",
+    "rawinput",
+    "rhbz",
+    "rpms",
+    "rtype",
+    "Screencast",
+    "screencasting",
+    "screencasts",
+    "signum",
+    "vmcore",
+    "webkitgtk",
+    "xdmcp",
+    "Xephyr",
+    "xorg",
+    "xrandr",
+    "zenity"
+  ],
 }
