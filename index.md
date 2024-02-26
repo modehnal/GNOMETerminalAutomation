@@ -1,3 +1,4 @@
+WHAT
 ## Table of contents <!-- omit from toc -->
 - [Introduction](#introduction)
 - [Automation stack for GNOME Applications](#automation-stack-for-gnome-applications)
