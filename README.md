@@ -31,7 +31,9 @@
 
 # Examples - TESTING LINKS - TO BE REMOVED
 
-  TODO pending review and final selection of article location:
+  TODO pending review and final selection of article location: <a href="https://modehnal.github.io/GNOMETerminalAutomation/data_folder/full_report_example.html">TEST_LINK</a>
+
+
   - Video prepared, side by side of session with command line: data_folder/gnome_terminal_test_example.webm
   - Backtrace from coredump example: data_folder/backtrace_from_coredump_zenity_example.html
   - Full html report page: data_folder/full_report_example.html
