@@ -3,29 +3,13 @@ set -x
 
 RUN_START=$(date +%s)
 COREDUMP_TARGET="gnome-terminal"
+TEST_REPORT_FILE="/tmp/report_$TEST.html"
 
 # Reducing false negatives by repeating tests but not those that are expected to fail.
 NON_REPEATING_TESTS=""
 is_known_to_fail() {
-    [[ $NON_REPEATING_TESTS =~ (^|[[:space:]])$1($|[[:space:]]) ]] && echo "0" || echo "1"
+  [[ $NON_REPEATING_TESTS =~ (^|[[:space:]])$1($|[[:space:]]) ]] && echo "0" || echo "1"
 }
-
-
-# Setup for dogtail if the installation failed or the location was not available at the time.
-if [ ! -e /tmp/dogtail_setup_done ]; then
-  if rpm -q python3-dogtail --nosignature --nodigest | grep "not installed" > /dev/null; then
-    echo "RUNTEST: Dogtail is NOT installed."
-    # Download the packages.
-    wget \
-    https://vhumpa.fedorapeople.org/dogtail/python3-dogtail-1.0.0-0.10.63b3ed5f.el9.noarch.rpm \
-    https://vhumpa.fedorapeople.org/dogtail/python3-dogtail-scripts-1.0.0-0.10.63b3ed5f.el9.noarch.rpm
-    # Install them.
-    rpm -ivh --nodeps python3-dogtail-1.0.0-0.10.63b3ed5f.el9.noarch.rpm python3-dogtail-scripts-1.0.0-0.10.63b3ed5f.el9.noarch.rpm
-  else
-    echo "RUNTEST: Dogtail is installed."
-  fi
-  touch /tmp/dogtail_setup_done
-fi
 
 
 # Opencv setup for x86_64.
@@ -38,7 +22,7 @@ fi
 # Setup qecore.
 if [ ! -e /tmp/qecore_setup_done ]; then
   # Specify version, in case of a mistake in the next version, we still need working automation.
-  python3 -m pip install qecore==3.20
+  python3 -m pip install qecore==3.24
   # Make the setup only once.
   touch /tmp/qecore_setup_done
 fi
@@ -50,10 +34,10 @@ for i in $(seq 1 1 $MAX_FAIL_COUNT); do
 
   if [[ $(arch) == "x86_64" ]]; then
     # For x86_64 respect the system setting.
-    sudo -u test qecore-headless --keep-max "behave -t $1 -k -f html-pretty -o /tmp/report_$TEST.html -f plain"; rc=$?
+    sudo -u test qecore-headless --keep-max "behave -t $1 -k -f html-pretty -o $TEST_REPORT_FILE -f plain"; rc=$?
   else
     # Fixing xorg on anything else.
-    sudo -u test qecore-headless --session-type xorg --keep-max "behave -t $1 -k -f html-pretty -o /tmp/report_$TEST.html -f plain"; rc=$?
+    sudo -u test qecore-headless --session-type xorg --keep-max "behave -t $1 -k -f html-pretty -o $TEST_REPORT_FILE -f plain"; rc=$?
   fi
 
   [ $rc -eq 0 -o $rc -eq 77 ] && break
@@ -90,5 +74,5 @@ fi
 
 
 # Make the actual report.
-rhts-report-result $TEST $RESULT "/tmp/report_$TEST.html"
+rhts-report-result $TEST $RESULT $TEST_REPORT_FILE
 exit $rc
