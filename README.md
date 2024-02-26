@@ -1,6 +1,6 @@
 # GNOME Terminal automation on Fedora 38 with Wayland <!-- omit from toc -->
 
-# Table of contents <!-- omit from toc -->
+## Table of contents <!-- omit from toc -->
 - [Introduction](#introduction)
 - [Automation stack for GNOME Applications](#automation-stack-for-gnome-applications)
   - [What do we use? Automation API - dogtail](#what-do-we-use-automation-api---dogtail)
@@ -31,7 +31,7 @@
 - [Sources](#sources)
 
 
-# Introduction
+## Introduction
 
 Hello and welcome.
 
@@ -43,11 +43,11 @@ I will explain in great detail what we are using, how are we using it, how to do
 
 Please keep in mind that nobody is perfect, and we are no exception. If you see anything that we are doing wrong, let us know. We love to learn and welcome any feedback that would improve our automation suites.
 
-# Automation stack for GNOME Applications
+## Automation stack for GNOME Applications
 
 First, let's go over individual parts of our automation stack that we use.
 
-## What do we use? Automation API - dogtail
+### What do we use? Automation API - dogtail
 
 We use Assistive Technology - Service Provider Interface (AT-SPI) which is a set of interfaces that allow access technologies, such as screen readers, to programmatically determine what is being displayed on the screen and simulate keyboard and mouse events. It can be also used for automated testing.
 
@@ -103,7 +103,7 @@ Here you can see a very minimal example of how we interact with applications, pr
 I will give a more thorough example within the `gnome-terminal` project.
 
 
-## How are we dealing with automation on Wayland? The gnome-ponytail-daemon
+### How are we dealing with automation on Wayland? The gnome-ponytail-daemon
 
 While the example provided above will work for Xorg. For Wayland there is an extra step we need to do in order to successfully navigate the application via correct coordinates.
 
@@ -127,7 +127,7 @@ I will show how to build and use ponytail in the `Full project example` section.
 
 The ponytail project repository is located here https://gitlab.gnome.org/ofourdan/gnome-ponytail-daemon
 
-## Giving the API a structure to be used in automation - behave
+### Giving the API a structure to be used in automation - behave
 
 So now we have explained what APIs we use at the base level. Now we need some structure to use this and have the code base scalable.
 We use behave https://github.com/behave/behave and its file structure as our automation structure.
@@ -250,7 +250,7 @@ Feature: Dummy Feature
 
 I have mentioned separating test scenarios executed to their own result pages. That is what the project `behave-html-pretty-formatter` is for.
 
-## The automation suite result page in form of behave-html-pretty-formatter project
+### The automation suite result page in form of behave-html-pretty-formatter project
 
 The result of the behave run you saw above is given to the console in a `pretty` format, which is the `Standard colourised pretty formatter`. Behave has quite a lot of formatters to use. These formatters are built-in and can be chosen from to get the resulted data in a lot of formats ready to be used for various purposes.
 
@@ -303,7 +303,7 @@ The project page can be found here https://github.com/behave-contrib/behave-html
 
 We can start the automating at this point. Although for the purpose of a general automation that will be very hard, as you would start from scratch and I imagine you would like to have much more that what is presented. Which is where `qecore` comes in.
 
-## Filling all the gaps and providing useful tools with the qecore project
+### Filling all the gaps and providing useful tools with the qecore project
 
 Qecore is a library of tools and commonly used functions that are required throughout our entire automation stack.
 
@@ -311,7 +311,7 @@ The project page can be found here https://gitlab.com/dogtail/qecore.
 
 I have started to develop qecore only a few years back, so this project is relatively new and is being continuously developed and improved with new features and is indispensable for our day-to-day use when working with GNOME Applications.
 
-  - ### Starting new session
+  - #### Starting new session
 
     Let's start with another part of our automation stack that cannot be left out and is the key to every single test (or at least most of them). While we have everything needed, there are situations where the session or application will freeze or otherwise will become unusable. We would like to do everything in one session but from our experience, this is in most cases not ideal or straight up not feasible.
 
@@ -351,7 +351,7 @@ I have started to develop qecore only a few years back, so this project is relat
       [test@localhost]$
     ```
 
-  - ### Sandbox configuration
+  - #### Sandbox configuration
 
     We start the suite with some commonly used methods and functions.
 
@@ -381,7 +381,7 @@ I have started to develop qecore only a few years back, so this project is relat
 
     Now this is already quite a lot but the only thing that is needed by the user is to have the class initialized in the `environment.py` and `TestSandbox` will do the rest.
 
-  - ### Application configuration
+  - #### Application configuration
 
     When executing any test suite, the user needs to identify an application that the suite will be using. For the purpose of automation of `gnome-terminal` on `Fedora` you can see we need to define 3 "applications". The `gnome-terminal` itself, the `preferences` which from some version is in Atspi as a standalone application and `gnome-control-center` named as settings.
 
@@ -433,7 +433,7 @@ I have started to develop qecore only a few years back, so this project is relat
 
     In the full example you can also see try/except usage. That is for recovery. Some issues can be fixed while running.
 
-  - ### Before Scenario
+  - #### Before Scenario
 
     Now for the behave's `before_scenario` function that gets executed before each test, this is where most of the work will be done by qecore's `sandbox`. But all the user needs to do is to call this method and that is all. Nothing more, nothing less.
 
@@ -462,7 +462,7 @@ I have started to develop qecore only a few years back, so this project is relat
       - Starts the recording - this is priceless when debugging or reporting bugs. Video of the bug reproducer ready to go.
       - There are many more, but a lot of them are not important in the context of this article
 
-  - ### After Scenario
+  - #### After Scenario
 
     The behave's `after_scenario` function works the same as the name implies. This will get executed after every test. As with previous example, all the user needs to do is to call the single method and the job is done.
 
@@ -488,7 +488,7 @@ I have started to develop qecore only a few years back, so this project is relat
 
     You can see full functioning `environment.py` example bellow.
 
-  - ### To summarize all what the user needs to do for setup
+  - #### To summarize all what the user needs to do for setup
 
     - `context.sandbox = TestSandbox("<name>", context=context)`
     - `context.<single_word_name> = context.sandbox.get_application(name="<name>")`
@@ -498,7 +498,7 @@ I have started to develop qecore only a few years back, so this project is relat
     Now your setup is done "forever". These are the setup parts and once this is done for a project, it rarely changes. Setup for some of my components, that I am responsible for, did not change for years that I was working on them. There are situations in my suites where I have no defined application, so all I need for setup are just 3 lines.
 
 
-  - ### Commonly used steps
+  - #### Commonly used steps
 
     In previous examples from `behave` usage, you saw that you can implement a function in python. Connect it with `behave` decorator `@step` to the text in `.feature` file.
 
@@ -531,7 +531,7 @@ I have started to develop qecore only a few years back, so this project is relat
 
     Apart from providing generic steps that can be used in every project, the intention was to also have a way for non-technical person to write English sentences and thus being able to write automated tests. It is not perfect and cannot be used for all cases generally, as there are situations where I just have to write a custom step, but even an inexperienced user should be able to write a very simple test without an extensive Python knowledge or even the project as a whole.
 
-    ### Common steps also come with the advantage of debugging on error
+    #### Common steps also come with the advantage of debugging on error
 
     Let's say the user is writing a test and makes a typo or uses a name or a role name of a widget incorrectly. There are quite a lot of ways how to debug such an issue. The most convenient one is not debugging at all and letting `qecore` do it for us:
 
@@ -569,7 +569,7 @@ I have started to develop qecore only a few years back, so this project is relat
 
     Debugging of this issue works very simply. If the common step failed to match a name or a role name, which are required data fields, search the Application for these labels and print what is presented. We can clearly see that the typo was in the name `Filee` and no such name exists in given Application tree. We can fix the typo and continue writing tests.
 
-  - ### Another provided functionality
+  - #### Another provided functionality
 
     The qecore project provides truly a lot for our day-to-day use. I cannot list and talk about everything as this article is already very long and more is to come. I would still like to list a few other features:
 
@@ -578,7 +578,7 @@ I have started to develop qecore only a few years back, so this project is relat
     - **Logging** - we have a continuous logging of qecore and what it does. Once any test fails, its logging data are attached to the HTML report to make sure qecore did not cause the mistake. We also can make sure the qecore is working as intended at all times. This logging can be also directed to the console, so user will be able to see it in real time. You can try it in the provided project with `$ LOGGING=true behave -kt start_via_command`
     - **Image matching** - from time to time there is a use case, where the accessibility is not working correctly, or the accessibility data is not there at all. For these situations we cannot do much, but we took an inspiration from OpenQA. In such cases we can identify widget and parts of the desktop simply with an image (`needle`) and try to find that image in the screenshot we take. These functions will return coordinates to us, and we can click to the correct place. The qecore has an image matching section that can be imported and used. It also provides pre-coded steps that are used most of the time. For the times you need to adjust the execution, we provide the `Matcher` class and its methods, so that you can build your custom functionality easily. For exact implementation and usage you can look here https://gitlab.com/dogtail/qecore/-/blob/master/qecore/image_matching.py
 
-  - ### Summary for the qecore and why we need it
+  - #### Summary for the qecore and why we need it
 
     While all of this text seems like a lot, from the user point of view there is not much going on. All the user needs is:
       - Install qecore (see the installation bellow).
@@ -590,11 +590,11 @@ I have started to develop qecore only a few years back, so this project is relat
       - Provides a lot of simple steps that are ready to be used with built-in debugging on error
       - Provides a way to write automated tests with image matching
 
-# Full project example
+## Full project example
 
   Now that I have covered everything our automation solution needs, let's get to the setup and execution of the GNOME Terminal test suite on Fedora 38 with Wayland.
 
-## Basic machine setup required before any action
+### Basic machine setup required before any action
 
   There are a few preparation steps our solution requires.
 
@@ -602,13 +602,13 @@ I have started to develop qecore only a few years back, so this project is relat
 
   This setup is generally handled by our CI, which is why when trying this you will have to do this setup once by hand.
 
-- ### Set up the Virtual Machine
+- #### Set up the Virtual Machine
 
   You can get a Fedora 38 ISO here https://fedoraproject.org/workstation/download/
 
   Boot the Fedora ISO with your choice of virtualization tool (e.g. Virtual Machine Manager or Boxes), install it to the disk and find out the IP.
 
-- ### Let's create a user named `test`
+- #### Let's create a user named `test`
 
   There is a possibility that you won't have the password of the users present on the booted ISO.
 
@@ -637,13 +637,13 @@ I have started to develop qecore only a few years back, so this project is relat
   On successful login we can start making suite preparations.
 
 
-## Installing, building and execution
+### Installing, building and execution
 
   Now all we need is to get our tools to your machine, clone the GNOME Terminal automation suite repository and execute it.
 
   It is important that following commands are executed with `sudo` if the command says so. Reason for this is consistency and not having to deal with permissions. There is also no benefit installing it in any other way. The user and automation will have full control of the machine, so we can test everything we require to.
 
-  - ### Install the API - `dogtail`
+  - #### Install the API - `dogtail`
 
     First lets start with the base API - `dogtail`. You will soon find out dogtail project is not updated in the `pypi` and that we have our up-to-date version in a different repository as a `rpm` package. I am also a bit confused at times as to where the most up-to-date version is of this project. *In the future plans section I am proposing a solution.*
 
@@ -653,7 +653,7 @@ I have started to develop qecore only a few years back, so this project is relat
     sudo python3 -m pip install git+https://gitlab.com/dogtail/dogtail@devel/wayland
     ```
 
-  - ### Build and Install the helper daemon for Wayland automation - `gnome-ponytail-daemon`
+  - #### Build and Install the helper daemon for Wayland automation - `gnome-ponytail-daemon`
 
     For automation on Wayland we also need a helper daemon for dogtail. The `gnome-ponytail-daemon` source code is in C, so we need to clone the project, build it and install it. It has a few dependencies that we will also get now:
     ```bash
@@ -666,7 +666,7 @@ I have started to develop qecore only a few years back, so this project is relat
     cd # get back to the home directory.
     ```
 
-  - ### Install the DesktopQE's automation tools - `qecore`
+  - #### Install the DesktopQE's automation tools - `qecore`
 
     Installing `qecore` will take care of the rest. It has dependencies on `behave` and `behave-html-pretty-formatter`, so it will pull everything it needs.
 
@@ -676,7 +676,7 @@ I have started to develop qecore only a few years back, so this project is relat
     sudo python3 -m pip install qecore==3.20
     ```
 
-  - ### Clone the GNOME Terminal test suite
+  - #### Clone the GNOME Terminal test suite
 
     I have prepared a GitHub repository with the contents of the GNOME Terminal test suite:
 
@@ -701,7 +701,7 @@ I have started to develop qecore only a few years back, so this project is relat
     headless: Started the script with PID <INT> # This is the last line that will let you know you can continue the work. The PID belongs to the `bash` you are now in.
     ```
 
-  - ### Start of the automation suite
+  - #### Start of the automation suite
 
     So now that you have running session, we can finally execute the automation. Let's do the simplest test - start of the GNOME Terminal.
 
@@ -777,9 +777,9 @@ I have started to develop qecore only a few years back, so this project is relat
 
     Now you can run any test that is present in `gnome-terminal` project. To see what tests are presented, you can look at the `mapper.yaml` file to `testmapper` section or browse the `feature` files and see what `tags` are defined. Or you can simply run it all with `$ behave`
 
-## Errors you can encounter
+### Errors you can encounter
 
-  - ## **ModuleNotFoundError: No module named 'ponytail'**
+  - ### **ModuleNotFoundError: No module named 'ponytail'**
 
     This error means installation part of the ponytail did not end well. You can fix it by hand with the following:
 
@@ -788,7 +788,7 @@ I have started to develop qecore only a few years back, so this project is relat
     sudo cp /home/test/gnome-ponytail-daemon/ponytail/ponytail.py /usr/local/lib/python3.11/site-packages/ponytail/
     ```
 
-  - ## **AttributeError: 'Ponytail' object has no attribute 'connected'**
+  - ### **AttributeError: 'Ponytail' object has no attribute 'connected'**
 
     This error means the ponytail daemon is not running. Check if the gnome-ponytail-daemon process is running, it should be during a running session, but something can still happen. We have three solutions here:
 
@@ -821,11 +821,11 @@ I have started to develop qecore only a few years back, so this project is relat
     sudo kill -9 <pid>
     ```
 
-  - ## **ConfigError: No steps directory in '/path/to/features'**
+  - ### **ConfigError: No steps directory in '/path/to/features'**
 
     The behave searches for a directory `features` in your current directory. Make sure you are in a suite directory and this issue will not appear.
 
-  - ## **Undefined decorator**
+  - ### **Undefined decorator**
 
     Test will fail with step being colored `yellow`, and it will give you the following hint:
 
@@ -840,17 +840,17 @@ I have started to develop qecore only a few years back, so this project is relat
     This means your decorator line somewhere in your `.feature` files is not being correctly matched to its implementation in your `step.py` file. Add the `undefined` decorator to the steps.py file as hinted.
 
 
-  - ## **SearchError: descendant of [application | gnome-terminal-server]: child with name='<not_existing_name>'**
+  - ### **SearchError: descendant of [application | gnome-terminal-server]: child with name='<not_existing_name>'**
 
     You have tried search or do an action for a widget that is not present in the `gnome-terminal` Accessibility tree. Make sure the search query uses correct data.
 
-  - ## **ValueError: Attempting to generate a mouse event at negative coordinates: (-2147483647.5,-2147483647.5)**
+  - ### **ValueError: Attempting to generate a mouse event at negative coordinates: (-2147483647.5,-2147483647.5)**
 
     You have attempted to generate a mouse event in the widget that is not currently on the screen.
 
     This is quite a common issue for us. Even if you think the widget is showing you can get this error. This usually means there are multiple nodes in the tree that fulfil your search query. You will need to specify your query with more detail.
 
-  - ## Debugging other issues
+  - ### Debugging other issues
 
     Most of the issues you should encounter will be based on misunderstanding of the application tree structure. With practice this will be solved.
 
@@ -946,7 +946,7 @@ I have started to develop qecore only a few years back, so this project is relat
 
     You can also take the inspiration of the API in the provided `gnome-terminal` project. There should be enough examples of implementation to get you started.
 
-## The main queries you will be using
+### The main queries you will be using
 
   ```python
   # Most common queries.
@@ -1101,9 +1101,9 @@ I have started to develop qecore only a few years back, so this project is relat
 
   Once you open the `Sniff` you can see the applications opened, and you can click and browse their content. For better visual presentation click on `Actions` -> `Highlight Items`. With Xorg this shows you the `red squares` correctly around the selected nodes, with Wayland this will be shown incorrectly. That is one of the reason why going through the tree via interactive shell is better. Once you get used to it, searching for your desired node is a matter of seconds.
 
-## Explaining the rest of the gnome-terminal project
+### Explaining the rest of the gnome-terminal project
 
-- ### The mapper.yaml
+- #### The mapper.yaml
 
   This file serves as an automation suite definition:
   - It contains definition of the `gnome-terminal` component and what arches it will run on and if it can run with Wayland
@@ -1121,7 +1121,7 @@ I have started to develop qecore only a few years back, so this project is relat
   - Tagging for some other automation logic - like `gate`
   - What extra packages to install for specific test
 
-- ### The runtest.sh
+- #### The runtest.sh
 
   This file is the main script that will be run in the machine, and you will see it do some logic I have explained.
 
@@ -1137,7 +1137,7 @@ I have started to develop qecore only a few years back, so this project is relat
   - List coredumpctl so that we know if the component coredumped. The test can pass, and the component can still generate coredump entry.
   - Make the actual data upload to our CI since our HTML logs are self-contained with everything we need there is only one file uploaded
 
-# Examples
+## Examples
 
   - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/gnome_terminal_test_example.webm">Video prepared, side by side of session with command line</a>
   - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/backtrace_from_coredump_zenity_example.html">Backtrace from coredump Example</a>
@@ -1145,7 +1145,7 @@ I have started to develop qecore only a few years back, so this project is relat
   - <a href="https://modehnal.github.io/GNOMETerminalAutomation/data/headless_colour_troubleshooting.png">The qecore-headless troubleshooting</a>
 
 
-# Comparison of OpenQA vs Accessibility
+## Comparison of OpenQA vs Accessibility
 
   While OpenQA is a good product for what it does, it is in my opinion not usable for GNOME Desktop Automation and not in the sense that it cannot be used, it can very well be used with some degree of difficulty. I have seen it being used testing anaconda and that is a perfect use case. It would be my choice as well for parts of the system where Atspi cannot be used.
 
@@ -1155,7 +1155,7 @@ I have started to develop qecore only a few years back, so this project is relat
 
   For me personally there is no comparison of the two, but there is no question about difficulty of comparison between two images and working with Python objects. Working with objects will always be more stable.
 
-# Usage with GTK4
+## Usage with GTK4
 
   While what I have described here will work for GTK4 Applications, you will soon find that there are extra steps required.
 
@@ -1167,13 +1167,13 @@ I have started to develop qecore only a few years back, so this project is relat
 
   This offset, while working with GTK4, will now cause the GTK3 applications actions to be in the wrong place and there is no reason for a suite to not use both.
 
-# Usage with Fedora 39
+## Usage with Fedora 39
 
   Please beware that this article is for Fedora 38. While it will work on 39 too, there are some design changes that the `qecore` is not yet adapted for. Like the `Activities` label missing which `qecore` currently uses for closing gnome-shell overview.
 
   This suite will work on Fedora 39 as is, but you will see some tests failing.
 
-# Reason for this article
+## Reason for this article
 
   There is another reason for this article apart from showcasing our solution.
 
@@ -1186,12 +1186,12 @@ I have started to develop qecore only a few years back, so this project is relat
   The most desired outcome would be to have more eyes on Accessibility. To provide justification and motivation for development of Accessibility and its ability to be used for automation.
 
 
-# Future Plans/Aspirations -> GNOMEAutomation
+## Future Plans/Aspirations -> GNOMEAutomation
 
   To be honest, there is no need to do any of the following things that I am listing. Currently, it works perfectly fine as is. But it can be better, it can work better, there is always a way to improve what we have.
 
 
-## Qecore
+### Qecore
 
   The qecore project is currently serving as a library of tools that also serves as a glue layer across different parts of our solution. Qecore does a lot of stuff on its own but is still designed around the main projects:
   - `Accessibility` - the contents of the applications we test
@@ -1202,7 +1202,7 @@ I have started to develop qecore only a few years back, so this project is relat
 
   `Aspirations` is to have a single project that covers everything that quality engineers need -> `GNOMEAutomation`.
 
-## Accessibility
+### Accessibility
 
   If accessibility goes away we are going to be "attached to another object by an inclined plane wrapped helically around an axis".
 
@@ -1218,7 +1218,7 @@ I have started to develop qecore only a few years back, so this project is relat
 
   With a project like this we also might have a wider base for Fedora testing days. Some things already work on Fedora and are mostly usable. The issue is a long setup as you can see, that this project could hopefully solve. I would imagine that once a test day comes, we could have GitLab/GitHub page with our testing suites that I and others would contribute to, so that anyone can just come, download the project and run the tests. This would be quite rich source of data that user would not have to spend a lot of time on. Simply boot VM, run the suits, report results. There is of course a need for real HW testing as well, but that is not the issue we are trying to solve here. Currently, I try to participate in test days, but I am not able to fit it to my schedule every time, which is a shame.
 
-## The behave
+### The behave
 
   Its file structure is the template of our project and all other things that are going before or after the behave command line execution. Behave has limitations that we have to hack around sometimes to get our desired outcome. Those are rare, although we have a recent example.
 
@@ -1228,7 +1228,7 @@ I have started to develop qecore only a few years back, so this project is relat
 
   `Aspiration` is to not have behave dictate our structure, possibilities and output but having project that enables our wants/needs/requirements. But again, behave works perfectly fine in the majority of our cases - no reason to reimplement something that exists with small changes. There is currently no proper reason to remove behave from our solution.
 
-## The dogtail API
+### The dogtail API
 
   This project serves as our API, it has its set of problems while it still works most the time.
 
@@ -1245,12 +1245,12 @@ I have started to develop qecore only a few years back, so this project is relat
 
   The `GNOMEAutomation` would provide API just like `dogtail`, but wrapping only over `Atspi` so any issue that is found will have a single source. The best case scenario would be pointing developers to the API and have them see that we are using the `Atspi` functions, so it cannot be an issue we introduced. They will also get a reproducer directly to the `Atspi` and will not have to deal with our environment. In the worst case, installing `GNOMEAutomation` with a given project it was reproduced in, which would be start-able right away without any difficult setup. Documentation will be present from the start (I have a habit to have docstring and proper documentations everywhere) so no one will need to go on long searches to figure out what is wrong and where.
 
-## The gnome-ponytail-daemon
+### The gnome-ponytail-daemon
 
   I would imagine there is a way how to include it in this project, so any issue can be tracked accordingly.
   This project was originally created to enable us to continue working on Wayland. It's hard to imagine anyone but us using `gnome-ponytail-daemon`, but I could be proven wrong.
 
-## The behave-html-pretty-formatter
+### The behave-html-pretty-formatter
 
   I made a proof of concept of the formatter and our team improved upon the concept which became our new formatter. The formatter was required to be written in a way to fit in our current solution. It had to be done as a standalone project. Which on its own is just bare bones so that it also can be used by upstream (we were pleasantly surprised how many people are using it already). We are still generating the data with qecore.
 
@@ -1258,7 +1258,7 @@ I have started to develop qecore only a few years back, so this project is relat
 
   An `Aspiration` is to have logs and reports over the entire automation stack.
 
-# Finally
+## Finally
 
   Hopefully information contained here were useful to you.
 
@@ -1270,11 +1270,11 @@ I have started to develop qecore only a few years back, so this project is relat
 
   Thank you for reading.
 
-# Keywords
+## Keywords
 
 Accessibility, AT-SPI, a11y, GNOME, Fedora, Wayland, automation, suite, test, gnome-terminal, Atspi, pyatspi2, dogtail, gnome-ponytail-daemon, behave, qecore, behave-html-pretty-formatter
 
-# Sources
+## Sources
 
  - http://lazka.github.io/pgi-docs/#Atspi-2.0
  - https://github.com/behave/behave
