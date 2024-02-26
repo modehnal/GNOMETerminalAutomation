@@ -1,5 +1,3 @@
-Another test
-
 # GNOME Terminal automation on Fedora 38 with Wayland <!-- omit from toc -->
 
 ## Table of contents <!-- omit from toc -->
