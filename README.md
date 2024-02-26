@@ -1,8 +1,6 @@
-# GNOME Terminal automation on Fedora 38 with Wayland.
+# GNOME Terminal automation on Fedora 38 with Wayland. <!-- omit from toc -->
 
-# Table of contents
-- [GNOME Terminal automation on Fedora 38 with Wayland.](#gnome-terminal-automation-on-fedora-38-with-wayland)
-- [Table of contents](#table-of-contents)
+# Table of contents <!-- omit from toc -->
 - [Introduction](#introduction)
 - [Automation stack for GNOME Applications](#automation-stack-for-gnome-applications)
   - [What do we use? Automation API - dogtail](#what-do-we-use-automation-api---dogtail)
