@@ -1,0 +1,142 @@
+component:
+  name: gnome-terminal
+  arches:
+    - all
+  tags: wayland
+
+
+dependencies:
+  beaker-tasks:
+    - /desktop/rhel9/install
+  packages:
+    - gnome-terminal
+
+
+beaker-hardware:
+- x86_64:
+    group: desktopqe-vm
+
+
+setup:
+
+cleanup:
+
+
+testmapper:
+# General Feature
+- start_via_command:
+    tags: gate
+- start_via_menu
+- quit_via_shortcut:
+    tags: gate
+- close_via_gnome_panel
+- open_new_window_via_shortcut
+- close_window_via_shortcut
+- add_tab:
+    tags: gate
+- close_tab
+- switch_tab:
+    tags: gate
+- detach_tab
+
+# Basic Feature
+- execute_command:
+    tags: gate
+- copy_and_paste
+- right_click_menu
+- keyboard_shortcuts
+- change_keyboard_shortcuts
+- clear:
+    tags: gate
+
+# View Feature
+- zoom_in_shortcut
+- zoom_out_shortcut
+- zoom_in_normal_shortcut
+- zoom_out_normal_shortcut
+- predefined_size_80_24
+- predefined_size_80_43
+- predefined_size_132_24
+- predefined_size_132_43
+
+# Profile Feature
+- create_profile:
+    tags: gate
+- delete_profile
+- edit_profile
+- change_profile
+- change_profile_name
+- starting_profile
+- profile_cursor_shape
+- profile_initial_terminal_size
+- profile_command_exit
+- profile_command_rerun
+- profile_command_keep_open
+- profile_default_color
+- profile_colors
+- profile_colors_palette
+- profile_scrolling_size
+- profile_scrolling_keystroke_off
+- profile_scrolling_keystroke_on
+- profile_scrolling_scroll_on_output_off
+- profile_scrolling_scroll_on_output_on
+- profile_scrolling_unlimited
+
+# Search Feature
+- search_dialog_shortcut
+- search_for_string:
+    tags: gate
+- search_for_string_match_case
+- search_for_string_entire_word
+- search_for_string_regex
+- search_backwards
+- search_next_shortcut
+- search_previous_shortcut
+
+# Menu Feature
+- file_menu_new_tab
+- file_menu_new_window:
+    tags: gate
+- file_menu_close_tab_with_single_tab_open
+- file_menu_close_tab_with_many_tabs_open
+- file_menu_close_window_with_single_window_open
+- file_menu_close_window_with_many_windows_open
+- edit_menu_copy
+- edit_menu_copy_as_html
+- edit_menu_paste
+- edit_menu_select_all
+- edit_menu_preferences
+- view_menu_show_menubar
+- view_menu_fullscreen
+- view_menu_restore_from_fullscreen
+- view_menu_zoom_in
+- view_menu_normal_size_from_zoom_in
+- view_menu_normal_size_from_zoom_out
+- view_menu_zoom_out
+- search_menu_find
+- search_menu_find_next
+- search_menu_find_previous
+- search_menu_clear_hightlight
+- terminal_menu_set_title
+- terminal_menu_read_only:
+    tags: gate
+- terminal_menu_reset_and_clear
+- terminal_menu_size_80_24
+- terminal_menu_size_80_43
+- terminal_menu_size_132_24
+- terminal_menu_size_132_43
+- tabs_menu_previous_tab
+- tabs_menu_next_tab
+- tabs_menu_move_tab_left
+- tabs_menu_move_tab_right
+- tabs_menu_detach_tab
+- help_menu_contents
+- help_menu_about
+- help_menu_inspector
+
+### Purpose of this section is to test upgrade from rhel-8 to rhel-9.
+# # Leapp Feature
+# #- create_profile_for_leapp: # executed on rhel-8
+# #    tags: upgrade_setup
+# - profile_for_leapp_exists:
+#     tags: upgrade_test

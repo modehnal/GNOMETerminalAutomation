@@ -1,2 +1,1 @@
-# GNOMETerminalAutomation
-GNOMETerminal Automation Suite
+# GNOME Terminal automation on Fedora 38 with Wayland.
